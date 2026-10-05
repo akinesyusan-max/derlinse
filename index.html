@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Landing Page - Cute Style</title>
     <!-- นำเข้าฟอนต์สไตล์น่ารักๆ จาก Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             /* โทนสีเริ่มต้น (ชมพู-ขาว) สไตล์ญี่ปุ่น */
             --bg-color: #FFF0F5;
             --card-bg: #FFFFFF;
-            --text-main: #5C4033; /* ใช้สีน้ำตาลเข้มแทนสีดำเพื่อความละมุน */
+            --text-main: #5C4033;
             --text-sub: #886F60;
             --btn-bg: #FFB7C5;
             --btn-hover: #FF9EAE;
@@ -21,7 +21,6 @@
 
         * {
             box-sizing: border-box;
-            /* ใช้ฟอนต์น่ารักๆ ขอบมน */
             font-family: 'Kanit', sans-serif;
             margin: 0;
             padding: 0;
@@ -35,7 +34,7 @@
             min-height: 100vh;
         }
 
-        /* ปุ่มฟันเฟืองสำหรับแอดมิน (ซ่อนรูปทรงให้กลืนกับเว็บ) */
+        /* ปุ่มฟันเฟืองสำหรับแอดมิน */
         .admin-gear-btn {
             position: absolute;
             top: 20px;
@@ -52,7 +51,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: transform 0.4s, background-color 0.3s;
             color: var(--btn-bg);
-            z-index: 100;
+            z-index: 50;
         }
 
         .admin-gear-btn:hover {
@@ -61,18 +60,18 @@
         }
 
         .container {
-            max-width: 600px; /* ปรับให้แคบลงนิดหน่อยเพื่อให้ดูเป็นสัดส่วนน่ารัก */
+            max-width: 600px; 
             margin: 60px auto 40px;
             padding: 0 20px;
         }
 
-        /* Card Styles - เน้นความโค้งมนขั้นสุด */
+        /* Card Styles */
         .card {
             background-color: var(--card-bg);
             border: 3px solid var(--border-color);
-            border-radius: 35px; /* ขอบโค้งมนมาก */
+            border-radius: 35px;
             padding: 40px 30px;
-            box-shadow: 0 10px 30px rgba(255, 183, 197, 0.3); /* เงาฟุ้งๆ */
+            box-shadow: 0 10px 30px rgba(255, 183, 197, 0.3);
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
@@ -84,16 +83,16 @@
         
         h1, h2, h3 { 
             color: var(--text-main); 
-            font-family: 'Mali', cursive; /* หัวข้อใช้ฟอนต์ลายมือ */
+            font-family: 'Mali', cursive; 
         }
         p { color: var(--text-sub); line-height: 1.6; }
 
-        /* Customer View Specific */
+        /* Customer View */
         .account-box {
             background-color: var(--bg-color);
             border: 2px dashed var(--border-color);
             padding: 25px 15px;
-            border-radius: 25px; /* ขอบโค้งมน */
+            border-radius: 25px; 
             margin: 25px 0;
         }
 
@@ -107,19 +106,21 @@
 
         .img-preview {
             max-width: 180px;
+            max-height: 180px;
+            object-fit: cover;
             border-radius: 25px;
             border: 3px solid var(--border-color);
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        /* Buttons - ทรงแคปซูล */
+        /* Buttons */
         .btn-primary {
             background-color: var(--btn-bg);
             color: #ffffff;
             border: none;
             padding: 14px 28px;
             font-size: 16px;
-            border-radius: 50px; /* ปุ่มโค้งมนเป็นแคปซูล */
+            border-radius: 50px; 
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
@@ -156,7 +157,7 @@
             width: 100%;
             padding: 12px 15px;
             border: 2px solid var(--border-color);
-            border-radius: 20px; /* ฟอร์มโค้งมน */
+            border-radius: 20px; 
             font-size: 14px;
             outline: none;
             transition: border-color 0.3s;
@@ -166,6 +167,12 @@
         .form-control:focus {
             border-color: var(--btn-bg);
             background-color: #ffffff;
+        }
+
+        input[type="file"].form-control {
+            padding: 9px 15px;
+            background-color: #fff;
+            cursor: pointer;
         }
 
         textarea.form-control { resize: vertical; height: 100px; border-radius: 20px; }
@@ -222,17 +229,8 @@
         }
 
         /* SVG Icons */
-        .icon {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .icon-gear {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
+        .icon { width: 20px; height: 20px; fill: currentColor; }
+        .icon-gear { width: 24px; height: 24px; fill: currentColor; }
 
         .hidden { display: none !important; }
 
@@ -247,15 +245,202 @@
             font-weight: 600;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
+
+        /* ================= LOGIN MODAL STYLES (Based on Reference Image) ================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(3px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            width: 90%;
+            max-width: 420px;
+            border-radius: 40px;
+            padding: 40px 35px 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.hidden .modal-box {
+            transform: translateY(20px);
+        }
+
+        .modal-title {
+            color: #1c1c38;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            font-family: 'Kanit', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 18px 45px 18px 20px;
+            border: 1px solid #e8e8e8;
+            border-radius: 20px;
+            font-size: 16px;
+            text-align: center; /* Center placeholder per design */
+            color: #555;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            outline: none;
+            transition: border 0.3s;
+        }
+        .modal-input:focus { border-color: #a78b93; }
+        .modal-input::placeholder { color: #aaa; }
+
+        .eye-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #a0a0a0;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            cursor: pointer;
+        }
+
+        .modal-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            padding: 0 5px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 8px;
+        }
+        
+        .checkbox-container input { display: none; }
+        .custom-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            display: inline-block;
+            position: relative;
+        }
+        .checkbox-container input:checked + .custom-checkbox {
+            background-color: #a78b93;
+            border-color: #a78b93;
+        }
+        .checkbox-container input:checked + .custom-checkbox::after {
+            content: "";
+            position: absolute;
+            left: 5px; top: 1px;
+            width: 5px; height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .forgot-link {
+            color: #666;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-submit-btn {
+            background-color: #a78b93;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(167, 139, 147, 0.4);
+            transition: all 0.2s;
+            margin-bottom: 25px;
+        }
+        .login-submit-btn:hover {
+            background-color: #927880;
+            transform: translateY(-2px);
+        }
+
+        .close-modal-btn {
+            background: none;
+            border: none;
+            color: #b5b5b5;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ปุ่มฟันเฟืองสำหรับเข้าสู่ระบบแอดมิน -->
-    <div class="admin-gear-btn" onclick="promptAdminLogin()">
+    <!-- ปุ่มฟันเฟือง (เข้าสู่ระบบ) -->
+    <div class="admin-gear-btn" onclick="openLoginModal()" id="btn-open-admin">
         <svg class="icon-gear" viewBox="0 0 24 24">
             <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
         </svg>
+    </div>
+
+    <!-- ================= LOGIN MODAL ================= -->
+    <div id="login-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h2 class="modal-title">เข้าสู่ระบบ Admin</h2>
+            
+            <div class="input-wrapper">
+                <input type="email" id="login-email" class="modal-input" placeholder="อีเมล">
+            </div>
+            
+            <div class="input-wrapper">
+                <input type="password" id="login-pass" class="modal-input" placeholder="รหัสผ่าน">
+                <!-- Eye Icon -->
+                <svg class="eye-icon" onclick="togglePassword()" viewBox="0 0 24 24">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </div>
+
+            <div class="modal-options">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="remember-me">
+                    <span class="custom-checkbox"></span>
+                    จดจำฉันไว้ 30 วัน
+                </label>
+                <a href="#" class="forgot-link">ลืมรหัสผ่าน?</a>
+            </div>
+
+            <button class="login-submit-btn" onclick="submitLogin()">Login</button>
+            <button class="close-modal-btn" onclick="closeLoginModal()">CLOSE</button>
+        </div>
     </div>
 
     <div class="container">
@@ -293,9 +478,7 @@
                 <h2 class="mb-20">ตั้งค่าหน้าเว็บ</h2>
                 
                 <h3 style="font-size: 16px; margin-bottom: 10px;">เลือกชุดสีเริ่มต้น</h3>
-                <div class="theme-buttons" id="theme-container">
-                    <!-- Buttons generated by JS -->
-                </div>
+                <div class="theme-buttons" id="theme-container"></div>
 
                 <hr class="mb-20" style="border-top: 2px dashed var(--border-color);">
 
@@ -342,10 +525,14 @@
                     <label>รายละเอียด / ข้อความ</label>
                     <textarea id="input-desc" class="form-control"></textarea>
                 </div>
+                
+                <!-- อัปโหลดรูปภาพ -->
                 <div class="form-group">
-                    <label>URL รูปภาพโลโก้/QR Code</label>
-                    <input type="text" id="input-image" class="form-control" placeholder="https://...">
+                    <label>รูปภาพโลโก้/QR Code (เลือกจากเครื่อง)</label>
+                    <input type="file" id="input-image-file" class="form-control" accept="image/*" onchange="previewImageFile(event)">
+                    <input type="hidden" id="input-image-base64"> <!-- เก็บข้อมูลภาพเพื่อบันทึก -->
                 </div>
+
                 <div class="form-group">
                     <label>ธนาคาร</label>
                     <input type="text" id="input-bank-name" class="form-control">
@@ -391,7 +578,7 @@
         const defaultData = {
             title: "ชำระค่าสินค้า",
             desc: "กรุณาโอนเงินและส่งสลิปผ่านทาง LINE Official นะคะ",
-            imageUrl: "https://via.placeholder.com/200x200?text=LOGO",
+            imageBase64: "https://via.placeholder.com/200x200?text=Upload+Image",
             bankName: "ธนาคารกสิกรไทย",
             accNumber: "123-4-56789-0",
             accName: "บจก. สินค้าน่ารัก",
@@ -404,27 +591,63 @@
             loadData();
         }
 
-        function promptAdminLogin() {
+        /* ----- ระบบ Login Modal ----- */
+        function openLoginModal() {
             const adminView = document.getElementById('admin-view');
-            
-            // หากหน้าแอดมินปิดอยู่ ให้ถามรหัส
-            if (adminView.classList.contains('hidden')) {
-                // รหัสผ่านตัวอย่างคือ 1234
-                let pwd = prompt("กรุณาใส่รหัสผ่านเพื่อตั้งค่าระบบ (รหัสทดสอบ: 1234)");
-                if (pwd === "1234") {
-                    document.getElementById('admin-view').classList.remove('hidden');
-                    document.getElementById('customer-view').classList.add('hidden');
-                } else if (pwd !== null) {
-                    alert("รหัสผ่านไม่ถูกต้อง!");
-                }
-            } else {
-                // หากเปิดอยู่ ให้สลับกลับไปหน้าลูกค้า
+            // หากอยู่หน้าแอดมินอยู่แล้ว ให้กดเพื่อกลับหน้าลูกค้า
+            if (!adminView.classList.contains('hidden')) {
                 document.getElementById('admin-view').classList.add('hidden');
                 document.getElementById('customer-view').classList.remove('hidden');
-                loadData(); // รีโหลดเผื่อแก้ไขแล้วไม่ได้บันทึก
+                loadData(); 
+            } else {
+                // เปิดหน้าต่าง Login
+                document.getElementById('login-modal').classList.remove('hidden');
+                document.getElementById('login-email').value = "";
+                document.getElementById('login-pass').value = "";
             }
         }
 
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.add('hidden');
+        }
+
+        function togglePassword() {
+            const passInput = document.getElementById('login-pass');
+            if (passInput.type === "password") {
+                passInput.type = "text";
+            } else {
+                passInput.type = "password";
+            }
+        }
+
+        function submitLogin() {
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+            
+            // ตรวจสอบรหัส (ตั้งไว้ที่ admin@mail.com / 1234)
+            if (email === "admin@mail.com" && pass === "1234") {
+                closeLoginModal();
+                document.getElementById('admin-view').classList.remove('hidden');
+                document.getElementById('customer-view').classList.add('hidden');
+            } else {
+                alert("อีเมล หรือ รหัสผ่านไม่ถูกต้อง (ทดสอบใช้: admin@mail.com / 1234)");
+            }
+        }
+
+        /* ----- ระบบอัปโหลดรูปภาพ ----- */
+        function previewImageFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // เก็บ Base64 String ลงใน input ซ่อนเพื่อรอเซฟ
+                    document.getElementById('input-image-base64').value = e.target.result;
+                }
+                reader.readAsDataURL(file); // แปลงไฟล์รูปเป็น Base64
+            }
+        }
+
+        /* ----- ระบบจัดการสีและบันทึกข้อมูล ----- */
         function renderThemeButtons() {
             const container = document.getElementById('theme-container');
             for (let themeName in themes) {
@@ -450,12 +673,12 @@
         }
 
         function loadData() {
-            const savedData = localStorage.getItem('paymentPageKawaii');
+            const savedData = localStorage.getItem('paymentPageKawaiiV2');
             const data = savedData ? JSON.parse(savedData) : defaultData;
 
             document.getElementById('input-title').value = data.title;
             document.getElementById('input-desc').value = data.desc;
-            document.getElementById('input-image').value = data.imageUrl;
+            document.getElementById('input-image-base64').value = data.imageBase64;
             document.getElementById('input-bank-name').value = data.bankName;
             document.getElementById('input-acc-number').value = data.accNumber;
             document.getElementById('input-acc-name').value = data.accName;
@@ -476,7 +699,7 @@
             const dataToSave = {
                 title: document.getElementById('input-title').value,
                 desc: document.getElementById('input-desc').value,
-                imageUrl: document.getElementById('input-image').value,
+                imageBase64: document.getElementById('input-image-base64').value, // บันทึกรูปที่อัปโหลด
                 bankName: document.getElementById('input-bank-name').value,
                 accNumber: document.getElementById('input-acc-number').value,
                 accName: document.getElementById('input-acc-name').value,
@@ -492,7 +715,7 @@
                 }
             };
 
-            localStorage.setItem('paymentPageKawaii', JSON.stringify(dataToSave));
+            localStorage.setItem('paymentPageKawaiiV2', JSON.stringify(dataToSave));
             updateCustomerView(dataToSave);
             
             const alertMsg = document.getElementById('alert-msg');
@@ -509,7 +732,7 @@
         function updateCustomerView(data) {
             document.getElementById('cv-title').textContent = data.title;
             document.getElementById('cv-desc').textContent = data.desc;
-            document.getElementById('cv-image').src = data.imageUrl;
+            document.getElementById('cv-image').src = data.imageBase64;
             document.getElementById('cv-bank-name').textContent = data.bankName;
             document.getElementById('cv-acc-number').textContent = data.accNumber;
             document.getElementById('cv-acc-name').textContent = "ชื่อบัญชี: " + data.accName;
