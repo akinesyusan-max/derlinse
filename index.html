@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment & Admin Panel</title>
+    <title>Payment Landing Page - Cute Style</title>
+    <!-- นำเข้าฟอนต์สไตล์น่ารักๆ จาก Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
+            /* โทนสีเริ่มต้น (ชมพู-ขาว) สไตล์ญี่ปุ่น */
             --bg-color: #FFF0F5;
             --card-bg: #FFFFFF;
-            --text-main: #333333;
-            --text-sub: #666666;
-            --btn-bg: #FF69B4;
-            --btn-hover: #FF1493;
-            --border-color: #FFC0CB;
+            --text-main: #5C4033; /* ใช้สีน้ำตาลเข้มแทนสีดำเพื่อความละมุน */
+            --text-sub: #886F60;
+            --btn-bg: #FFB7C5;
+            --btn-hover: #FF9EAE;
+            --border-color: #FFE4E1;
         }
 
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* ใช้ฟอนต์น่ารักๆ ขอบมน */
+            font-family: 'Kanit', sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -25,187 +30,232 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            position: relative;
+            min-height: 100vh;
         }
 
-        .top-nav {
-            background-color: #333;
-            padding: 10px 20px;
+        /* ปุ่มฟันเฟืองสำหรับแอดมิน (ซ่อนรูปทรงให้กลืนกับเว็บ) */
+        .admin-gear-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
             display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .top-nav button {
-            background-color: #555;
-            color: white;
-            border: none;
-            padding: 8px 16px;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            border-radius: 4px;
-            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.4s, background-color 0.3s;
+            color: var(--btn-bg);
+            z-index: 100;
         }
 
-        .top-nav button:hover {
-            background-color: #777;
+        .admin-gear-btn:hover {
+            transform: rotate(90deg);
+            background-color: var(--bg-color);
         }
 
         .container {
-            max-width: 800px;
-            margin: 40px auto;
+            max-width: 600px; /* ปรับให้แคบลงนิดหน่อยเพื่อให้ดูเป็นสัดส่วนน่ารัก */
+            margin: 60px auto 40px;
             padding: 0 20px;
         }
 
-        /* Card Styles */
+        /* Card Styles - เน้นความโค้งมนขั้นสุด */
         .card {
             background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 3px solid var(--border-color);
+            border-radius: 35px; /* ขอบโค้งมนมาก */
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(255, 183, 197, 0.3); /* เงาฟุ้งๆ */
             margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
         .text-center { text-align: center; }
         .mb-15 { margin-bottom: 15px; }
         .mb-20 { margin-bottom: 20px; }
         
-        h1, h2, h3 { color: var(--text-main); }
+        h1, h2, h3 { 
+            color: var(--text-main); 
+            font-family: 'Mali', cursive; /* หัวข้อใช้ฟอนต์ลายมือ */
+        }
         p { color: var(--text-sub); line-height: 1.6; }
 
         /* Customer View Specific */
         .account-box {
             background-color: var(--bg-color);
-            border: 1px dashed var(--border-color);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
+            border: 2px dashed var(--border-color);
+            padding: 25px 15px;
+            border-radius: 25px; /* ขอบโค้งมน */
+            margin: 25px 0;
         }
 
         .acc-number {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
+            font-size: 26px;
+            font-weight: 600;
+            letter-spacing: 1px;
             color: var(--text-main);
             margin: 10px 0;
         }
 
         .img-preview {
-            max-width: 200px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+            max-width: 180px;
+            border-radius: 25px;
+            border: 3px solid var(--border-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        /* Buttons */
+        /* Buttons - ทรงแคปซูล */
         .btn-primary {
             background-color: var(--btn-bg);
             color: #ffffff;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 28px;
             font-size: 16px;
-            border-radius: 6px;
+            border-radius: 50px; /* ปุ่มโค้งมนเป็นแคปซูล */
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .btn-primary:hover {
             background-color: var(--btn-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
 
         .btn-block { width: 100%; }
 
         /* Admin Form Styles */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: left;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 600;
             font-size: 14px;
+            padding-left: 10px;
         }
 
         .form-control {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 20px; /* ฟอร์มโค้งมน */
             font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+            background-color: #fafafa;
         }
 
-        textarea.form-control { resize: vertical; height: 100px; }
+        .form-control:focus {
+            border-color: var(--btn-bg);
+            background-color: #ffffff;
+        }
+
+        textarea.form-control { resize: vertical; height: 100px; border-radius: 20px; }
 
         /* Color Picker Section */
         .color-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
             gap: 15px;
-            margin-top: 10px;
+            margin-top: 15px;
+            text-align: left;
         }
 
         .color-item {
             display: flex;
             flex-direction: column;
             font-size: 12px;
+            font-weight: 600;
         }
 
         .color-item input[type="color"] {
             width: 100%;
             height: 40px;
-            border: none;
-            border-radius: 4px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
             cursor: pointer;
+            padding: 2px;
+            background: #fff;
         }
 
         .theme-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            justify-content: center;
         }
 
         .theme-btn {
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            background: #f9f9f9;
+            padding: 8px 16px;
+            border: 2px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-main);
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 20px;
             font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
         }
-        .theme-btn:hover { background: #eee; }
+        .theme-btn:hover { 
+            background: var(--btn-bg); 
+            color: #fff;
+            border-color: var(--btn-bg);
+        }
 
         /* SVG Icons */
         .icon {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             fill: currentColor;
         }
 
-        /* Hidden class */
+        .icon-gear {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
         .hidden { display: none !important; }
 
         #alert-msg {
             display: none;
-            background-color: #4CAF50;
+            background-color: var(--btn-bg);
             color: white;
             text-align: center;
-            padding: 10px;
-            border-radius: 4px;
+            padding: 12px;
+            border-radius: 50px;
             margin-bottom: 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation for Demo Purposes -->
-    <div class="top-nav">
-        <button onclick="switchView('customer')">มุมมองลูกค้า (Customer)</button>
-        <button onclick="switchView('admin')">ระบบหลังบ้าน (Admin)</button>
+    <!-- ปุ่มฟันเฟืองสำหรับเข้าสู่ระบบแอดมิน -->
+    <div class="admin-gear-btn" onclick="promptAdminLogin()">
+        <svg class="icon-gear" viewBox="0 0 24 24">
+            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+        </svg>
     </div>
 
     <div class="container">
@@ -214,7 +264,7 @@
         <!-- ================= CUSTOMER VIEW ================= -->
         <div id="customer-view">
             <div class="card text-center">
-                <img id="cv-image" src="" alt="Payment Image" class="img-preview mb-15">
+                <img id="cv-image" src="" alt="Payment Graphic" class="img-preview mb-15">
                 <h2 id="cv-title" class="mb-15"></h2>
                 <p id="cv-desc"></p>
 
@@ -232,37 +282,39 @@
                 </div>
                 
                 <a id="cv-contact-link" href="#" target="_blank" class="btn-primary btn-block" style="text-decoration: none;">
-                    แจ้งหลักฐานการโอนเงิน (ติดต่อร้าน)
+                    แจ้งหลักฐานการโอนเงิน
                 </a>
             </div>
         </div>
 
         <!-- ================= ADMIN VIEW ================= -->
         <div id="admin-view" class="hidden">
-            <div class="card">
-                <h2 class="mb-20">ตั้งค่าหน้าเว็บ (Admin Panel)</h2>
+            <div class="card text-center">
+                <h2 class="mb-20">ตั้งค่าหน้าเว็บ</h2>
                 
-                <h3>1. เลือกชุดสีเริ่มต้น (10 Preset Themes)</h3>
+                <h3 style="font-size: 16px; margin-bottom: 10px;">เลือกชุดสีเริ่มต้น</h3>
                 <div class="theme-buttons" id="theme-container">
                     <!-- Buttons generated by JS -->
                 </div>
 
-                <h3 class="mb-15">2. ปรับแต่งสีแบบละเอียด</h3>
+                <hr class="mb-20" style="border-top: 2px dashed var(--border-color);">
+
+                <h3 style="font-size: 16px; margin-bottom: 10px;">ปรับแต่งสีเอง</h3>
                 <div class="color-grid mb-20">
                     <div class="color-item">
-                        <label>สีพื้นหลังหลัก</label>
+                        <label>สีพื้นหลังเว็บ</label>
                         <input type="color" id="color-bg">
                     </div>
                     <div class="color-item">
-                        <label>สีพื้นหลังกล่อง</label>
+                        <label>สีกล่องข้อความ</label>
                         <input type="color" id="color-card">
                     </div>
                     <div class="color-item">
-                        <label>สีข้อความหลัก</label>
+                        <label>สีตัวอักษรหลัก</label>
                         <input type="color" id="color-text-main">
                     </div>
                     <div class="color-item">
-                        <label>สีข้อความรอง</label>
+                        <label>สีตัวอักษรรอง</label>
                         <input type="color" id="color-text-sub">
                     </div>
                     <div class="color-item">
@@ -279,9 +331,9 @@
                     </div>
                 </div>
 
-                <hr class="mb-20" style="border-top: 1px solid #eee;">
+                <hr class="mb-20" style="border-top: 2px dashed var(--border-color);">
 
-                <h3 class="mb-15">3. ข้อมูลบัญชีและเนื้อหา</h3>
+                <h3 style="font-size: 16px; margin-bottom: 15px;">แก้ไขข้อมูล</h3>
                 <div class="form-group">
                     <label>หัวข้อหน้าเว็บ</label>
                     <input type="text" id="input-title" class="form-control">
@@ -291,7 +343,7 @@
                     <textarea id="input-desc" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>URL รูปภาพ (โลโก้ หรือ QR Code)</label>
+                    <label>URL รูปภาพโลโก้/QR Code</label>
                     <input type="text" id="input-image" class="form-control" placeholder="https://...">
                 </div>
                 <div class="form-group">
@@ -307,7 +359,7 @@
                     <input type="text" id="input-acc-name" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>ลิงก์ติดต่อ (เช่น LINE OA หรือ ลิงก์แจ้งโอน)</label>
+                    <label>ลิงก์สำหรับติดต่อร้าน</label>
                     <input type="text" id="input-contact" class="form-control" placeholder="https://lin.ee/...">
                 </div>
 
@@ -315,46 +367,64 @@
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M17 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V7L17 3ZM19 19H5V5H16.17L19 7.83V19ZM12 12C10.34 12 9 13.34 9 15C9 16.66 10.34 18 12 18C13.66 18 15 16.66 15 15C15 13.34 13.66 12 12 12ZM6 6H15V9H6V6Z"/>
                     </svg>
-                    บันทึกข้อมูล
+                    บันทึกและดูตัวอย่าง
                 </button>
             </div>
         </div>
     </div>
 
     <script>
-        // 10 Preset Themes
+        // ชุดสีพรีเซ็ต
         const themes = {
-            "ชมพู-ขาว": { bg: "#FFF0F5", card: "#FFFFFF", textMain: "#333333", textSub: "#666666", btnBg: "#FF69B4", btnHover: "#FF1493", border: "#FFC0CB" },
-            "ดำ-ขาว": { bg: "#F5F5F5", card: "#FFFFFF", textMain: "#000000", textSub: "#555555", btnBg: "#000000", btnHover: "#333333", border: "#DDDDDD" },
-            "ฟ้า-ขาว": { bg: "#F0F8FF", card: "#FFFFFF", textMain: "#003366", textSub: "#4682B4", btnBg: "#0066CC", btnHover: "#0052A3", border: "#B0C4DE" },
-            "ฟ้า-เหลือง": { bg: "#003366", card: "#004080", textMain: "#FFFFFF", textSub: "#E0E0E0", btnBg: "#FFD700", btnHover: "#FFC107", border: "#0059B3" },
-            "ฟ้า-เขียว": { bg: "#E0FFFF", card: "#FFFFFF", textMain: "#006400", textSub: "#2E8B57", btnBg: "#20B2AA", btnHover: "#008B8B", border: "#AFEEEE" },
-            "ม่วง-ขาว": { bg: "#F8F8FF", card: "#FFFFFF", textMain: "#4B0082", textSub: "#6A5ACD", btnBg: "#8A2BE2", btnHover: "#7B68EE", border: "#D8BFD8" },
-            "เอิร์ธโทน": { bg: "#F5F5DC", card: "#FFFFFF", textMain: "#5C4033", textSub: "#8B4513", btnBg: "#D2B48C", btnHover: "#C19A6B", border: "#DEB887" },
-            "ดำ-แดง": { bg: "#1A1A1A", card: "#242424", textMain: "#FFFFFF", textSub: "#CCCCCC", btnBg: "#DC143C", btnHover: "#B22222", border: "#444444" },
-            "เขียวมิ้นต์-เทา": { bg: "#F5FFFA", card: "#FFFFFF", textMain: "#2F4F4F", textSub: "#708090", btnBg: "#00FA9A", btnHover: "#00FF7F", border: "#E0EEE0" },
-            "ส้ม-ขาว": { bg: "#FFF5EE", card: "#FFFFFF", textMain: "#8B4500", textSub: "#CD6600", btnBg: "#FF8C00", btnHover: "#FF7F50", border: "#FFDAB9" }
+            "ชมพู-ขาว": { bg: "#FFF0F5", card: "#FFFFFF", textMain: "#5C4033", textSub: "#886F60", btnBg: "#FFB7C5", btnHover: "#FF9EAE", border: "#FFE4E1" },
+            "ดำ-ขาว": { bg: "#F5F5F5", card: "#FFFFFF", textMain: "#333333", textSub: "#777777", btnBg: "#555555", btnHover: "#333333", border: "#E0E0E0" },
+            "ฟ้า-ขาว": { bg: "#F0F8FF", card: "#FFFFFF", textMain: "#2C3E50", textSub: "#5D6D7E", btnBg: "#85C1E9", btnHover: "#5DADE2", border: "#D6EAF8" },
+            "ฟ้า-เหลือง": { bg: "#EBF5FB", card: "#FFFFFF", textMain: "#154360", textSub: "#2980B9", btnBg: "#F4D03F", btnHover: "#F1C40F", border: "#AED6F1" },
+            "ฟ้า-เขียว": { bg: "#E0FFFF", card: "#FFFFFF", textMain: "#0B5345", textSub: "#148F77", btnBg: "#48C9B0", btnHover: "#1ABC9C", border: "#A3E4D7" },
+            "ม่วง-ขาว": { bg: "#F4ECF7", card: "#FFFFFF", textMain: "#4A235A", textSub: "#7D3C98", btnBg: "#C39BD3", btnHover: "#AF7AC5", border: "#E8DAEF" },
+            "เอิร์ธโทน": { bg: "#F9E79F", card: "#FFFFFF", textMain: "#784212", textSub: "#935116", btnBg: "#E59866", btnHover: "#DC7633", border: "#FAD7A1" },
+            "ดำ-แดง": { bg: "#FDEDEC", card: "#FFFFFF", textMain: "#641E16", textSub: "#922B21", btnBg: "#F1948A", btnHover: "#E74C3C", border: "#F5B7B1" },
+            "เขียวมิ้นต์": { bg: "#E8F8F5", card: "#FFFFFF", textMain: "#0E6251", textSub: "#117A65", btnBg: "#73C6B6", btnHover: "#45B39D", border: "#D1F2EB" },
+            "ส้ม-ขาว": { bg: "#FEF5E7", card: "#FFFFFF", textMain: "#6E2C00", textSub: "#A04000", btnBg: "#F5CBA7", btnHover: "#F0B27A", border: "#FDEBD0" }
         };
 
-        // Default Data
         const defaultData = {
-            title: "ชำระค่าบริการ",
-            desc: "กรุณาโอนเงินเข้าบัญชีด้านล่าง และแจ้งสลิปผ่านปุ่มติดต่อร้าน",
+            title: "ชำระค่าสินค้า",
+            desc: "กรุณาโอนเงินและส่งสลิปผ่านทาง LINE Official นะคะ",
             imageUrl: "https://via.placeholder.com/200x200?text=LOGO",
-            bankName: "ธนาคารกสิกรไทย (KBank)",
+            bankName: "ธนาคารกสิกรไทย",
             accNumber: "123-4-56789-0",
-            accName: "บจก. ดิจิทัลโปรดักส์",
+            accName: "บจก. สินค้าน่ารัก",
             contactLink: "#",
             colors: themes["ชมพู-ขาว"]
         };
 
-        // Initialize App
         function init() {
             renderThemeButtons();
             loadData();
         }
 
-        // Render Preset Buttons
+        function promptAdminLogin() {
+            const adminView = document.getElementById('admin-view');
+            
+            // หากหน้าแอดมินปิดอยู่ ให้ถามรหัส
+            if (adminView.classList.contains('hidden')) {
+                // รหัสผ่านตัวอย่างคือ 1234
+                let pwd = prompt("กรุณาใส่รหัสผ่านเพื่อตั้งค่าระบบ (รหัสทดสอบ: 1234)");
+                if (pwd === "1234") {
+                    document.getElementById('admin-view').classList.remove('hidden');
+                    document.getElementById('customer-view').classList.add('hidden');
+                } else if (pwd !== null) {
+                    alert("รหัสผ่านไม่ถูกต้อง!");
+                }
+            } else {
+                // หากเปิดอยู่ ให้สลับกลับไปหน้าลูกค้า
+                document.getElementById('admin-view').classList.add('hidden');
+                document.getElementById('customer-view').classList.remove('hidden');
+                loadData(); // รีโหลดเผื่อแก้ไขแล้วไม่ได้บันทึก
+            }
+        }
+
         function renderThemeButtons() {
             const container = document.getElementById('theme-container');
             for (let themeName in themes) {
@@ -366,7 +436,6 @@
             }
         }
 
-        // Apply a preset theme to the color pickers and live preview
         function applyPresetTheme(themeName) {
             const colors = themes[themeName];
             document.getElementById('color-bg').value = colors.bg;
@@ -380,12 +449,10 @@
             applyColorsToCSS(colors);
         }
 
-        // Load data from LocalStorage or use default
         function loadData() {
-            const savedData = localStorage.getItem('paymentPageData');
+            const savedData = localStorage.getItem('paymentPageKawaii');
             const data = savedData ? JSON.parse(savedData) : defaultData;
 
-            // Populate Admin Inputs
             document.getElementById('input-title').value = data.title;
             document.getElementById('input-desc').value = data.desc;
             document.getElementById('input-image').value = data.imageUrl;
@@ -394,7 +461,6 @@
             document.getElementById('input-acc-name').value = data.accName;
             document.getElementById('input-contact').value = data.contactLink;
 
-            // Populate Colors
             document.getElementById('color-bg').value = data.colors.bg;
             document.getElementById('color-card').value = data.colors.card;
             document.getElementById('color-text-main').value = data.colors.textMain;
@@ -406,7 +472,6 @@
             updateCustomerView(data);
         }
 
-        // Save data from Admin panel
         function saveAdminData() {
             const dataToSave = {
                 title: document.getElementById('input-title').value,
@@ -427,7 +492,7 @@
                 }
             };
 
-            localStorage.setItem('paymentPageData', JSON.stringify(dataToSave));
+            localStorage.setItem('paymentPageKawaii', JSON.stringify(dataToSave));
             updateCustomerView(dataToSave);
             
             const alertMsg = document.getElementById('alert-msg');
@@ -436,11 +501,11 @@
             
             setTimeout(() => {
                 alertMsg.style.display = "none";
-                switchView('customer');
-            }, 1500);
+                document.getElementById('admin-view').classList.add('hidden');
+                document.getElementById('customer-view').classList.remove('hidden');
+            }, 1000);
         }
 
-        // Update the Customer HTML and CSS variables
         function updateCustomerView(data) {
             document.getElementById('cv-title').textContent = data.title;
             document.getElementById('cv-desc').textContent = data.desc;
@@ -453,7 +518,6 @@
             applyColorsToCSS(data.colors);
         }
 
-        // Apply colors to root CSS variables
         function applyColorsToCSS(colors) {
             const root = document.documentElement;
             root.style.setProperty('--bg-color', colors.bg);
@@ -465,20 +529,6 @@
             root.style.setProperty('--border-color', colors.border);
         }
 
-        // Toggle Views
-        function switchView(view) {
-            if (view === 'admin') {
-                document.getElementById('admin-view').classList.remove('hidden');
-                document.getElementById('customer-view').classList.add('hidden');
-            } else {
-                document.getElementById('admin-view').classList.add('hidden');
-                document.getElementById('customer-view').classList.remove('hidden');
-                // Reload data to reset any unsaved changes if they switch back
-                loadData();
-            }
-        }
-
-        // Copy Account Number
         function copyAccount() {
             const accNum = document.getElementById('cv-acc-number').textContent;
             navigator.clipboard.writeText(accNum).then(() => {
@@ -488,7 +538,6 @@
             });
         }
 
-        // Run on load
         window.onload = init;
     </script>
 </body>
