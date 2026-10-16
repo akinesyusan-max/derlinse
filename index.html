@@ -3,1074 +3,1049 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Review & Contact</title>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Online Store & Queue Management</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f3e5f5 100%);
-            --card-bg: #ffffff;
-            --text-main: #886f6f;
-            --text-sub: #b09e9e;
-            --accent-color: #d4a5a5;
-            --border-color: #f0e6e6;
-            --shadow-color: rgba(200, 160, 160, 0.15);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'M PLUS Rounded 1c', sans-serif;
-        }
-
         body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px 10px;
-            color: var(--text-main);
-            overflow-x: hidden;
-            position: relative;
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--bg-main, #fffcfc); 
+            color: #4a4a4a;
         }
-
-        /* Falling Hearts & Stars Animation */
-        .falling-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 1;
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-
-        .falling-item {
-            position: absolute;
-            top: -10%;
-            user-select: none;
-            animation: fall linear infinite;
-            opacity: 0.7;
+        ::-webkit-scrollbar-track {
+            background: #fff0f3;
         }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-10vh) translateX(0) rotate(0deg);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(110vh) translateX(50px) rotate(360deg);
-                opacity: 0.2;
-            }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb3c1;
+            border-radius: 10px;
         }
-
-        /* Top Right Buttons */
-        .top-controls {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            display: flex;
-            gap: 10px;
-            z-index: 100;
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
-
-        .icon-btn {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: transform 0.2s, background 0.2s;
-            font-size: 18px;
-            color: var(--text-main);
-        }
-
-        .icon-btn:hover {
-            transform: scale(1.1);
-            background: #fff;
-        }
-
-        /* Main Container Card */
-        .phone-container {
-            width: 100%;
-            max-width: 420px;
-            background: var(--card-bg);
-            border-radius: 35px;
-            box-shadow: 0 15px 35px var(--shadow-color);
-            padding: 15px;
-            position: relative;
-            z-index: 10;
-            border: 4px solid rgba(255, 255, 255, 0.8);
-            margin-bottom: 50px;
-        }
-
-        /* Banner Cover */
-        .banner-box {
-            width: 100%;
-            height: 170px;
-            border-radius: 25px;
-            overflow: hidden;
-            border: 2px solid #fdeef2;
-            position: relative;
-            background: #fdf5f7;
-        }
-
-        .banner-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Profile Section */
-        .profile-section {
-            text-align: center;
-            margin-top: -45px;
-            position: relative;
-        }
-
-        .avatar-box {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            border: 4px solid #ffffff;
-            overflow: hidden;
-            margin: 0 auto;
-            background: #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .avatar-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .shop-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-top: 8px;
-        }
-
-        .shop-sub {
-            font-size: 13px;
-            color: var(--text-sub);
-            margin-top: 2px;
-        }
-
-        /* Stats Card */
-        .stats-card {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 15px;
-            margin: 20px 0;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-        }
-
-        .stat-item {
-            text-align: center;
-            flex: 1;
-        }
-
-        .stat-value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-sub);
-            margin-top: 2px;
-        }
-
-        .stat-divider {
-            width: 1px;
-            height: 30px;
-            background: var(--border-color);
-        }
-
-        .star-icon {
-            color: #d4a5a5;
+        .animate-marquee {
             display: inline-block;
-        }
-
-        /* Review Form Box */
-        .review-form-card {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            padding: 18px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 18px;
-            border-radius: 25px;
-            border: 1px solid var(--border-color);
-            background: #faf6f6;
-            color: var(--text-main);
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-input:focus {
-            border-color: var(--accent-color);
-        }
-
-        .star-picker {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .star-picker span {
-            color: #ddd;
-            transition: color 0.2s;
-        }
-
-        .star-picker span.active {
-            color: #fbc02d;
-        }
-
-        .form-row-file {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #faf6f6;
-            border: 1px solid var(--border-color);
-            border-radius: 25px;
-            padding: 8px 15px;
-        }
-
-        .cam-btn {
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .file-name-display {
-            font-size: 13px;
-            color: var(--text-sub);
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            animation: marquee 15s linear infinite;
         }
-
-        .submit-btn {
-            background: linear-gradient(135deg, #d4a5a5 0%, #c28e8e 100%);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(212, 165, 165, 0.3);
-            transition: opacity 0.2s;
-            text-align: center;
-        }
-
-        .submit-btn:hover {
-            opacity: 0.9;
-        }
-
-        /* Review List */
-        .reviews-section {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .review-card {
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 15px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.02);
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
-
-        .review-author {
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--text-main);
-        }
-
-        .review-stars {
-            color: #fbc02d;
-            font-size: 13px;
-        }
-
-        .review-text {
-            font-size: 13px;
-            color: var(--text-sub);
-            line-height: 1.4;
-            word-break: break-all;
-        }
-
-        .review-img {
-            margin-top: 10px;
-            width: 100%;
-            max-height: 180px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        /* Floating Cat Contact Button & Popup */
-        .floating-contact-wrapper {
-            position: fixed;
-            bottom: 25px;
-            right: 20px;
-            z-index: 100;
-            display: flex;
-            flex-direction: column-reverse;
-            align-items: flex-end;
-            gap: 10px;
-        }
-
-        .cat-btn {
-            width: 60px;
-            height: 60px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: 2px solid #fce4ec;
-            transition: transform 0.2s;
-            font-size: 26px;
-        }
-
-        .cat-btn:hover {
-            transform: scale(1.08);
-        }
-
-        .contact-popup {
-            background: #fff;
-            border-radius: 20px;
-            padding: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 180px;
-            opacity: 0;
-            transform: translateY(10px) scale(0.95);
-            pointer-events: none;
-            transition: all 0.25s ease;
-        }
-
-        .contact-popup.show {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            pointer-events: auto;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 12px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-size: 13px;
-            font-weight: 500;
-            background: #faf6f6;
-            transition: background 0.2s;
-        }
-
-        .contact-link:hover {
-            background: #f0e6e6;
-        }
-
-        /* Modal Overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(3px);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-        }
-
-        .modal-card {
-            background: #fff;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 25px;
-            padding: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--text-main);
-            text-align: center;
-        }
-
-        .modal-close {
-            background: #eee;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            float: right;
-            margin-top: -5px;
-        }
-
-        .admin-section {
-            margin-bottom: 15px;
-        }
-
-        .admin-section label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-sub);
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .admin-review-item {
-            background: #faf6f6;
-            border-radius: 12px;
-            padding: 10px;
-            margin-bottom: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 5px;
-        }
-
-        .mini-btn {
-            padding: 5px 10px;
-            border-radius: 8px;
-            border: none;
-            font-size: 11px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .btn-edit { background: #e3f2fd; color: #1976d2; }
-        .btn-delete { background: #ffebee; color: #c62828; }
-        .btn-save { background: #e8f5e9; color: #2e7d32; }
-
     </style>
 </head>
-<body>
+<body id="app-body" class="min-h-screen pb-32 relative" style="--bg-main: #fffcfc;">
 
-    <!-- Falling Container -->
-    <div class="falling-container" id="fallingContainer"></div>
-
-    <!-- Top Right Controls -->
-    <div class="top-controls">
-        <button class="icon-btn" id="musicBtn" title="เปิด/ปิดเพลง">🎵</button>
-        <button class="icon-btn" id="settingsBtn" title="ตั้งค่าแอดมิน">⚙️</button>
-    </div>
-
-    <!-- Main Card View -->
-    <div class="phone-container">
-        <!-- Banner Cover -->
-        <div class="banner-box">
-            <img id="displayBanner" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" alt="Banner">
-        </div>
-
-        <!-- Profile Section -->
-        <div class="profile-section">
-            <div class="avatar-box">
-                <img id="displayAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Avatar">
+    <!-- ==================== MAIN SHOP VIEW ==================== -->
+    <div id="main-shop-container">
+        <!-- Top Bar -->
+        <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md shadow-xs px-4 py-3 flex justify-between items-center border-b border-[#f7eff0]">
+            <div class="flex items-center space-x-2">
+                <button onclick="openAdminLoginModal()" class="w-8 h-8 rounded-full bg-[#fdfafb] border border-[#f0e6e7] flex items-center justify-center text-[#a7898d] hover:bg-[#f5e8ea] transition shadow-2xs" title="เข้าสู่ระบบแอดมิน">
+                    <i class="fa-solid fa-chess-rook text-sm"></i>
+                </button>
+                <span id="shop-title-header" class="text-[#a7898d] font-extrabold text-lg">ชื่อร้าน</span>
             </div>
-            <div class="shop-name" id="displayShopName">ชื่อร้าน</div>
-            <div class="shop-sub" id="displayShopSub">thx for review</div>
-        </div>
-
-        <!-- Stats Card -->
-        <div class="stats-card">
-            <div class="stat-item">
-                <div class="stat-value" id="statReviewsCount">0</div>
-                <div class="stat-label">reviews</div>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <div class="stat-value"><span class="star-icon">★</span> <span id="statRatingVal">0.0</span></div>
-                <div class="stat-label">rating</div>
-            </div>
-        </div>
-
-        <!-- Review Form -->
-        <div class="review-form-card">
-            <input type="text" id="inputName" class="form-input" placeholder="ชื่อของคุณ...">
-            <div class="star-picker" id="starPicker">
-                <span data-value="1">★</span>
-                <span data-value="2">★</span>
-                <span data-value="3">★</span>
-                <span data-value="4">★</span>
-                <span data-value="5">★</span>
-            </div>
-            <div class="form-row-file">
-                <label class="cam-btn" for="inputPhotoFile">📷</label>
-                <input type="file" id="inputPhotoFile" accept="image/*" style="display: none;">
-                <span class="file-name-display" id="fileNameDisplay">ยังไม่ได้เลือกรูปภาพ</span>
-            </div>
-            <textarea id="inputText" class="form-input" rows="2" placeholder="พิมพ์รีวิวของคุณที่นี่..."></textarea>
-            <button class="submit-btn" id="submitReviewBtn">ส่ง</button>
-        </div>
-
-        <!-- Reviews List -->
-        <div class="reviews-section" id="reviewsListContainer">
-            <!-- Dynamic Reviews Here -->
-        </div>
-    </div>
-
-    <!-- Floating Contact Button & Popup -->
-    <div class="floating-contact-wrapper">
-        <div class="contact-popup" id="contactPopup">
-            <a href="https://line.me" target="_blank" class="contact-link" id="linkLine">
-                <span style="color:#00B900;">💬</span> Line Official
-            </a>
-            <a href="https://instagram.com" target="_blank" class="contact-link" id="linkIg">
-                <span style="color:#E1306C;">📷</span> Instagram
-            </a>
-            <a href="https://facebook.com" target="_blank" class="contact-link" id="linkFb">
-                <span style="color:#1877F2;">📘</span> Facebook
-            </a>
-        </div>
-        <div class="cat-btn" id="catBtn" title="ติดต่อเรา">🐱</div>
-    </div>
-
-    <!-- Admin Modal -->
-    <div class="modal-overlay" id="adminModal">
-        <div class="modal-card">
-            <button class="modal-close" id="closeModalBtn">×</button>
-            <div class="modal-title" id="modalTitle">⚙️ จัดการระบบแอดมิน</div>
             
-            <div id="loginSection">
-                <div class="admin-section">
-                    <label>รหัสผ่านแอดมิน (ค่าเริ่มต้น: 1234)</label>
-                    <input type="password" id="adminPassInput" class="form-input" placeholder="กรอกรหัสผ่าน...">
+            <div class="flex items-center space-x-3">
+                <button onclick="openCartModal()" class="relative w-9 h-9 rounded-full bg-[#fdfafb] border border-[#f0e6e7] flex items-center justify-center text-[#a7898d] hover:bg-[#f5e8ea] transition shadow-2xs" title="ตะกร้าสินค้า">
+                    <i class="fa-solid fa-basket-shopping text-sm"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-[#a7898d] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow-xs">0</span>
+                </button>
+                <div class="flex flex-col space-y-1 w-6 opacity-30 cursor-default">
+                    <span class="h-0.5 bg-gray-600 rounded-full w-full"></span>
+                    <span class="h-0.5 bg-gray-600 rounded-full w-4 ml-auto"></span>
+                    <span class="h-0.5 bg-gray-600 rounded-full w-full"></span>
                 </div>
-                <div style="margin-bottom:12px; display:flex; align-items:center; gap:8px; font-size:13px;">
-                    <input type="checkbox" id="rememberMeCheck" checked> จดจำการเข้าสู่ระบบในเครื่องนี้
-                </div>
-                <button class="submit-btn" id="loginBtn" style="width:100%;">เข้าสู่ระบบ</button>
             </div>
+        </header>
 
-            <div id="dashboardSection" style="display:none;">
-                <div class="admin-section">
-                    <label>ธีมสีสำเร็จรูป</label>
-                    <div style="display:flex; gap:8px; margin-bottom:10px;">
-                        <button class="submit-btn" id="presetPink" style="padding:6px 12px; font-size:13px;">ชมพูพาสเทล</button>
-                        <button class="submit-btn" id="presetCream" style="padding:6px 12px; font-size:13px; background:linear-gradient(135deg, #f5ebe0 0%, #e3d5ca 100%); color:#5c4033;">ครีมมินิมอล</button>
+        <!-- Main Container Views -->
+        <main class="max-w-md mx-auto p-4 space-y-5">
+
+            <!-- TAB 1: HOME -->
+            <section id="view-home" class="view-section space-y-5">
+                <div class="relative space-y-2">
+                    <div class="h-44 w-full rounded-[32px] overflow-hidden shadow-sm relative border border-[#f7eff0]">
+                        <img id="home-banner-img" src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=800&q=80" alt="Banner" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <div class="flex justify-between items-start px-2">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow-md bg-white -mt-10 shrink-0 relative z-10">
+                                <img id="home-profile-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Profile" class="w-full h-full object-cover">
+                            </div>
+                            <div class="pt-1">
+                                <h2 id="home-shop-name" class="font-bold text-base text-gray-800">ชื่อร้าน</h2>
+                                <p id="home-shop-caption" class="text-xs text-gray-500">แคปชั่น</p>
+                            </div>
+                        </div>
+                        
+                        <div id="store-status-badge" class="px-4 py-1.5 rounded-full text-xs font-bold bg-[#f4fcf6] border border-[#d2f0dc] text-green-700 flex items-center gap-1.5 shadow-2xs mt-1">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            <span id="store-status-text">Open</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="admin-section">
-                    <label>ข้อมูลร้านค้า</label>
-                    <input type="text" id="editShopName" class="form-input" placeholder="ชื่อร้าน" style="margin-bottom:6px;">
-                    <input type="text" id="editShopSub" class="form-input" placeholder="คำอธิบายใต้ร้าน" style="margin-bottom:6px;">
+                <div class="bg-[#fdfafb] border border-[#f7eff0] rounded-[24px] p-3 flex items-center space-x-3 overflow-hidden shadow-2xs">
+                    <i class="fa-solid fa-bullhorn text-[#a7898d] shrink-0"></i>
+                    <div class="overflow-hidden w-full relative">
+                        <p id="announcement-text" class="text-xs text-[#a7898d] font-medium animate-marquee">
+                            🎉 โปรโมชั่นพิเศษต้อนรับเดือนนี้! ซื้อครบ 500 บาทสะสมแต้มฟรี!
+                        </p>
+                    </div>
                 </div>
 
-                <div class="admin-section">
-                    <label>เปลี่ยนรูปแบนเนอร์ (Cover)</label>
-                    <input type="file" id="editBannerFile" accept="image/*" class="form-input" style="padding:8px;">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-gray-800 text-base"><i class="fa-solid fa-fire text-[#a7898d] mr-2"></i>สินค้าแนะนำ</h3>
+                        <button onclick="switchTab('products')" class="text-xs text-[#a7898d] font-medium hover:underline">ดูทั้งหมด</button>
+                    </div>
+                    <div id="recommended-products-list" class="grid grid-cols-2 gap-3"></div>
                 </div>
 
-                <div class="admin-section">
-                    <label>เปลี่ยนรูปโปรไฟล์</label>
-                    <input type="file" id="editAvatarFile" accept="image/*" class="form-input" style="padding:8px;">
+                <!-- Booking Queue Button under recommended products -->
+                <div class="pt-2">
+                    <button onclick="openBookingModal()" class="w-full py-3.5 bg-[#a7898d] hover:bg-[#927377] text-white rounded-full font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-calendar-check text-base"></i> จองคิว
+                    </button>
+                </div>
+            </section>
+
+            <!-- TAB 2: PRODUCTS (GROUP) -->
+            <section id="view-products" class="view-section hidden space-y-4">
+                <h2 class="font-extrabold text-[22px] text-[#a7898d]">Group</h2>
+                
+                <div class="flex items-center space-x-2.5">
+                    <div class="relative flex items-center bg-white border border-[#f7eff0] rounded-full shadow-2xs px-4 py-3 flex-1">
+                        <i class="fa-solid fa-magnifying-glass text-[#c0aab1] text-sm mr-3"></i>
+                        <input type="text" id="product-search-input" oninput="renderProducts()" placeholder="ค้นหาสินค้า..." class="w-full text-xs text-gray-600 focus:outline-none bg-transparent placeholder-[#c0aab1]">
+                    </div>
+                    <button onclick="openCatFilterModal()" class="w-11 h-11 bg-white border border-[#f7eff0] rounded-full shadow-2xs flex items-center justify-center text-[#a7898d] hover:bg-[#fdfafb] transition shrink-0" title="ตัวกรอง">
+                        <i class="fa-solid fa-paw text-sm"></i>
+                    </button>
                 </div>
 
-                <div class="admin-section">
-                    <label>ลิงก์โซเชียลมีเดีย</label>
-                    <input type="text" id="editLineLink" class="form-input" placeholder="Line URL" style="margin-bottom:6px;">
-                    <input type="text" id="editIgLink" class="form-input" placeholder="Instagram URL" style="margin-bottom:6px;">
-                    <input type="text" id="editFbLink" class="form-input" placeholder="Facebook URL" style="margin-bottom:10px;">
+                <div class="flex items-center space-x-2">
+                    <button class="w-8 h-8 rounded-full bg-white border border-[#f7eff0] text-[#a7898d] flex items-center justify-center shadow-2xs shrink-0 text-xs">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <div id="categories-tabs-container" class="flex space-x-2 overflow-x-auto pb-1 scrollbar-none flex-1"></div>
+                    <button class="w-8 h-8 rounded-full bg-white border border-[#f7eff0] text-[#a7898d] flex items-center justify-center shadow-2xs shrink-0 text-xs">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
 
-                <div class="admin-section">
-                    <label>จัดการรีวิวทั้งหมด</label>
-                    <div id="adminReviewsList" style="max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:6px;"></div>
+                <div id="product-count-label" class="text-[11px] text-[#c0aab1] font-medium pt-0.5">2 items</div>
+
+                <div id="products-grid" class="grid grid-cols-2 gap-3.5 pt-1"></div>
+            </section>
+
+            <!-- TAB 3: QUEUE CHECK -->
+            <section id="view-queue" class="view-section hidden space-y-4">
+                <div class="bg-white rounded-[32px] p-2 shadow-sm border border-[#f7eff0]">
+                    <div class="h-40 w-full rounded-[24px] overflow-hidden relative border border-[#f0e6e7]">
+                        <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=800&q=80" alt="Queue Cake Banner" class="w-full h-full object-cover opacity-80">
+                    </div>
                 </div>
 
-                <button class="submit-btn" id="saveAdminConfig" style="width:100%; margin-top:10px;">บันทึกการเปลี่ยนแปลงทั้งหมด</button>
-                <button class="submit-btn" id="logoutAdminBtn" style="width:100%; margin-top:8px; background:#e0e0e0; color:#555;">ออกจากระบบ</button>
+                <!-- Dual Box Layout for Queue Status -->
+                <div class="grid grid-cols-3 gap-3">
+                    <!-- Left Box: User Queue Info -->
+                    <div class="col-span-2 bg-white rounded-[24px] p-4 border-[1.5px] border-[#a7898d] shadow-sm flex items-center justify-between">
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <span id="my-queue-name-display" class="font-extrabold text-sm text-[#a7898d]">k'sobell</span>
+                                <span class="px-2 py-0.5 bg-white border border-[#a7898d] rounded-full text-[8px] font-extrabold text-[#a7898d] tracking-wider">LINE</span>
+                            </div>
+                            <p id="my-queue-service-display" class="text-xs font-extrabold text-[#8c6b70]">ปกกลุ่มแนวเจ้าหญิง</p>
+                        </div>
+                        <div>
+                            <div id="my-queue-status-btn" class="px-3.5 py-2 bg-[#fdfafb] border border-[#f0e6e7] rounded-full text-[10px] font-bold text-[#a7898d] shadow-2xs whitespace-nowrap">
+                                ถึงคิวแล้ว
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Box: Remaining Queue Count -->
+                    <div class="bg-white rounded-[24px] p-3 border-[1.5px] border-[#a7898d] shadow-sm flex flex-col items-center justify-center text-center">
+                        <span class="text-[10px] font-bold text-[#8c6b70]">เหลืออีก</span>
+                        <div class="text-xl font-extrabold text-[#a7898d] leading-none my-0.5">0</div>
+                        <span class="text-[10px] font-bold text-[#8c6b70]">Q</span>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center bg-white rounded-full shadow-sm px-4 py-3.5 border border-[#f7eff0]">
+                    <i class="fa-solid fa-magnifying-glass text-[#c0aab1] text-sm mr-3"></i>
+                    <input type="text" id="queue-search-input" oninput="renderQueues()" placeholder="ค้นหาคิวงาน..." class="w-full text-[13px] font-medium text-gray-600 focus:outline-none bg-transparent placeholder-[#c0aab1]">
+                </div>
+
+                <div class="flex justify-between items-center bg-[#fdfafb] p-1.5 rounded-full border border-[#f7eff0] shadow-sm">
+                    <button onclick="setQueueFilter('ทั้งหมด')" id="q-filter-ทั้งหมด" class="flex-1 px-3 py-2.5 rounded-full text-[10px] font-extrabold text-[#a7898d] bg-white shadow-xs transition">ทั้งหมด</button>
+                    <button onclick="setQueueFilter('ยังไม่ได้เริ่ม')" id="q-filter-ยังไม่ได้เริ่ม" class="flex-1 px-3 py-2.5 rounded-full text-[10px] font-medium text-[#c0aab1] transition">ยังไม่ได้เริ่ม</button>
+                    <button onclick="setQueueFilter('กำลังทำ')" id="q-filter-กำลังทำ" class="flex-1 px-3 py-2.5 rounded-full text-[10px] font-medium text-[#c0aab1] transition">กำลังทำ</button>
+                    <button onclick="setQueueFilter('เสร็จแล้ว')" id="q-filter-เสร็จแล้ว" class="flex-1 px-3 py-2.5 rounded-full text-[10px] font-medium text-[#c0aab1] transition">เสร็จแล้ว</button>
+                </div>
+
+                <div id="queue-list-container" class="space-y-5 pt-2"></div>
+            </section>
+
+            <!-- TAB 4: DETAIL -->
+            <section id="view-detail" class="view-section hidden space-y-4">
+                <div class="bg-white rounded-[28px] p-5 shadow-sm border border-[#f7eff0] space-y-3">
+                    <h3 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-file-lines text-[#a7898d] mr-2"></i>รายละเอียดร้านค้า</h3>
+                    <p class="text-xs text-gray-600 leading-relaxed">ยินดีต้อนรับสู่ร้านค้าออนไลน์ของเรา เลือกชมสินค้าและบริการได้เลยค่ะ ✨</p>
+                </div>
+
+                <div class="bg-white rounded-[32px] p-6 shadow-sm border border-[#f7eff0] space-y-6">
+                    <h3 class="font-extrabold text-[15px] text-[#a7898d]">How to Note slip</h3>
+
+                    <div class="space-y-5 relative">
+                        <div class="flex items-start space-x-4 relative">
+                            <div class="relative flex flex-col items-center shrink-0">
+                                <div class="w-10 h-10 relative flex items-center justify-center z-15">
+                                    <svg viewBox="0 0 24 24" class="w-10 h-10 absolute inset-0 text-[#fceef1] drop-shadow-2xs fill-current stroke-[#f0e6e7] stroke-1">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                    <span class="relative z-20 text-xs font-extrabold text-[#a7898d]">1</span>
+                                </div>
+                                <div class="absolute top-10 bottom-[-24px] w-0.5 border-l-2 border-dotted border-[#dfcbce]"></div>
+                            </div>
+                            <div class="pt-1.5 space-y-0.5">
+                                <h4 class="font-bold text-xs text-gray-800">เข้าไปที่แอพธนาคาร</h4>
+                                <p class="text-[11px] text-[#c0aab1] leading-relaxed">บันทึกภาพบัญชีจากทางร้านไปได้เลยนะคะ</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 relative pt-1">
+                            <div class="relative flex flex-col items-center shrink-0">
+                                <div class="w-10 h-10 relative flex items-center justify-center z-15">
+                                    <svg viewBox="0 0 24 24" class="w-10 h-10 absolute inset-0 text-[#fceef1] drop-shadow-2xs fill-current stroke-[#f0e6e7] stroke-1">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                    <span class="relative z-20 text-xs font-extrabold text-[#a7898d]">2</span>
+                                </div>
+                                <div class="absolute top-10 bottom-[-24px] w-0.5 border-l-2 border-dotted border-[#dfcbce]"></div>
+                            </div>
+                            <div class="pt-1.5 space-y-0.5">
+                                <h4 class="font-bold text-xs text-gray-800">สแกนหรือใส่เลขบัญชีของทางร้าน</h4>
+                                <p class="text-[11px] text-[#c0aab1] leading-relaxed">โปรดตรวจสอบเลขบัญชีด้วยนะคะ หากโอนผิดทางร้านไม่รับผิดชอบทุกกรณี</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 relative pt-1">
+                            <div class="relative flex flex-col items-center shrink-0">
+                                <div class="w-10 h-10 relative flex items-center justify-center z-15">
+                                    <svg viewBox="0 0 24 24" class="w-10 h-10 absolute inset-0 text-[#fceef1] drop-shadow-2xs fill-current stroke-[#f0e6e7] stroke-1">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                    <span class="relative z-20 text-xs font-extrabold text-[#a7898d]">3</span>
+                                </div>
+                                <div class="absolute top-10 bottom-[-24px] w-0.5 border-l-2 border-dotted border-[#dfcbce]"></div>
+                            </div>
+                            <div class="pt-1.5 space-y-0.5">
+                                <h4 class="font-bold text-xs text-gray-800">หาคำว่า "กำกับข้อความ/บันทึกความจำ"</h4>
+                                <p class="text-[11px] text-[#c0aab1] leading-relaxed">ในแต่ละธนาคารจะมีข้อความไม่เหมือนกัน แต่จะไม่ต่างกันมากค่ะ</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 relative pt-1">
+                            <div class="relative flex flex-col items-center shrink-0">
+                                <div class="w-10 h-10 relative flex items-center justify-center z-15">
+                                    <svg viewBox="0 0 24 24" class="w-10 h-10 absolute inset-0 text-[#fceef1] drop-shadow-2xs fill-current stroke-[#f0e6e7] stroke-1">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                    <span class="relative z-20 text-xs font-extrabold text-[#a7898d]">4</span>
+                                </div>
+                                <div class="absolute top-10 bottom-[-24px] w-0.5 border-l-2 border-dotted border-[#dfcbce]"></div>
+                            </div>
+                            <div class="pt-1.5 space-y-0.5">
+                                <h4 class="font-bold text-xs text-gray-800">นำข้อความโน้ตสลิปของทางร้านวางลงไป</h4>
+                                <p class="text-[11px] text-[#c0aab1] leading-relaxed">หากลืมโน้ตสลิป ปรับ 0.01 บาทนะคะ</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 relative pt-1">
+                            <div class="relative flex flex-col items-center shrink-0">
+                                <div class="w-10 h-10 relative flex items-center justify-center z-15">
+                                    <svg viewBox="0 0 24 24" class="w-10 h-10 absolute inset-0 text-[#fceef1] drop-shadow-2xs fill-current stroke-[#f0e6e7] stroke-1">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                    <span class="relative z-20 text-xs font-extrabold text-[#a7898d]">5</span>
+                                </div>
+                            </div>
+                            <div class="pt-1.5 space-y-0.5">
+                                <h4 class="font-bold text-xs text-gray-800">เมื่อเรียบร้อยแล้วโอนได้เลยค่ะ</h4>
+                                <p class="text-[11px] text-[#c0aab1] leading-relaxed">ตรวจสอบชื่อบัญชีก่อนโอนอีกครั้งนะคะ หากโอนผิดทางร้านไม่สามารถรับผิดชอบได้คับ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: MEMBER -->
+            <section id="view-member" class="view-section hidden space-y-4">
+                <div id="auth-container" class="bg-white rounded-[28px] p-5 shadow-sm border border-[#f7eff0] space-y-4">
+                    <div class="flex bg-[#fdfafb] border border-[#f7eff0] p-1 rounded-full mb-3">
+                        <button onclick="switchAuthMode('login')" id="auth-mode-login" class="flex-1 py-2 text-xs font-bold rounded-full bg-white text-[#a7898d] shadow-xs transition">เข้าสู่ระบบ</button>
+                        <button onclick="switchAuthMode('register')" id="auth-mode-register" class="flex-1 py-2 text-xs font-bold rounded-full text-[#c0aab1] transition">สมัครสมาชิก</button>
+                    </div>
+                    <div id="form-login" class="space-y-3">
+                        <div>
+                            <label class="text-xs text-gray-600 font-medium">อีเมล</label>
+                            <input type="email" id="login-email" placeholder="example@email.com" class="w-full mt-1 px-3.5 py-2.5 bg-[#fdfafb] border border-[#f7eff0] rounded-2xl text-xs text-gray-600 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-600 font-medium">รหัสผ่าน</label>
+                            <input type="password" id="login-password" placeholder="••••••••" class="w-full mt-1 px-3.5 py-2.5 bg-[#fdfafb] border border-[#f7eff0] rounded-2xl text-xs text-gray-600 focus:outline-none">
+                        </div>
+                        <button onclick="handleLogin()" class="w-full py-2.5 bg-[#a7898d] hover:bg-[#927377] text-white rounded-full text-xs font-bold shadow-sm transition">เข้าสู่ระบบ</button>
+                    </div>
+                    <div id="form-register" class="space-y-3 hidden">
+                        <div>
+                            <label class="text-xs text-gray-600 font-medium">ชื่อบัญชี</label>
+                            <input type="text" id="reg-name" placeholder="ชื่อของคุณ" class="w-full mt-1 px-3.5 py-2.5 bg-[#fdfafb] border border-[#f7eff0] rounded-2xl text-xs text-gray-600 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-600 font-medium">ไลน์ไอดี</label>
+                            <input type="text" id="reg-line" placeholder="@yourlineid" class="w-full mt-1 px-3.5 py-2.5 bg-[#fdfafb] border border-[#f7eff0] rounded-2xl text-xs text-gray-600 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-600 font-medium">อีเมล</label>
+                            <input type="email" id="reg-email" placeholder="example@email.com" class="w-full mt-1 px-3.5 py-2.5 bg-[#fdfafb] border border-[#f7eff0] rounded-2xl text-xs text-gray-600 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-600 font-medium">รหัสผ่าน</label>
+                            <input type="password" id="reg-password" placeholder="••••••••" class="w-full mt-1 px-3.5 py-2.5 bg-[#fdfafb] border border-[#f7eff0] rounded-2xl text-xs text-gray-600 focus:outline-none">
+                        </div>
+                        <button onclick="handleRegister()" class="w-full py-2.5 bg-[#a7898d] hover:bg-[#927377] text-white rounded-full text-xs font-bold shadow-sm transition">สมัครสมาชิก</button>
+                    </div>
+                </div>
+
+                <div id="customer-profile-view" class="hidden space-y-4">
+                    <div class="bg-white rounded-[28px] p-4 shadow-sm border border-[#f7eff0] relative">
+                        <div class="h-32 w-full rounded-[20px] overflow-hidden relative">
+                            <img id="acc-banner-img" src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=800&q=80" alt="Cover" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex items-center space-x-3 -mt-6 px-3 relative z-10">
+                            <div class="w-16 h-16 rounded-full border-4 border-white overflow-hidden shadow-md bg-white shrink-0">
+                                <img id="acc-profile-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Avatar" class="w-full h-full object-cover">
+                            </div>
+                            <div class="pt-6">
+                                <h3 id="acc-name-display" class="font-bold text-gray-800 text-base">ชื่อสมาชิก</h3>
+                                <p id="acc-caption-display" class="text-xs text-gray-500">สมาชิกทั่วไป</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-[#f7eff0] flex justify-between items-center text-xs">
+                            <div>
+                                <span class="text-gray-400">แต้มสะสม:</span>
+                                <span id="acc-points-display" class="font-bold text-[#a7898d] ml-1 text-sm">0 แต้ม</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="handleLogout()" class="w-full py-2.5 bg-[#fdfafb] border border-[#f7eff0] text-gray-600 rounded-full text-xs font-bold hover:bg-[#f5e8ea] transition">ออกจากระบบ</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="fixed bottom-4 left-0 right-0 max-w-sm mx-auto z-30 px-4">
+            <nav class="bg-white/95 backdrop-blur-md border border-[#f7eff0] py-2.5 px-4 rounded-full flex justify-around items-center shadow-xl text-[10px]">
+                <button onclick="switchTab('home')" id="nav-btn-home" class="nav-btn flex flex-col items-center text-[#a7898d] transition">
+                    <i class="fa-solid fa-house text-sm"></i>
+                    <span class="mt-1 font-semibold">Home</span>
+                </button>
+                <button onclick="switchTab('products')" id="nav-btn-products" class="nav-btn flex flex-col items-center text-gray-400 transition relative">
+                    <i class="fa-solid fa-folder-open text-sm"></i>
+                    <span class="mt-1 font-semibold">Group</span>
+                </button>
+                <button onclick="switchTab('queue')" id="nav-btn-queue" class="nav-btn flex flex-col items-center text-gray-400 transition">
+                    <i class="fa-solid fa-list-check text-sm"></i>
+                    <span class="mt-1 font-semibold">Queue</span>
+                </button>
+                <button onclick="switchTab('detail')" id="nav-btn-detail" class="nav-btn flex flex-col items-center text-gray-400 transition">
+                    <i class="fa-solid fa-file-lines text-sm"></i>
+                    <span class="mt-1 font-semibold">Detail</span>
+                </button>
+                <button onclick="switchTab('member')" id="nav-btn-member" class="nav-btn flex flex-col items-center text-gray-400 transition">
+                    <i class="fa-solid fa-user text-sm"></i>
+                    <span class="mt-1 font-semibold">Member</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Floating Social Menu -->
+        <div class="fixed bottom-20 right-5 z-40 flex flex-col items-end">
+            <div id="social-menu-popup" class="space-y-2 mb-2 hidden w-44">
+                <a href="https://line.me" target="_blank" class="flex items-center justify-between px-3.5 py-2 bg-white/95 backdrop-blur-md rounded-full shadow-md text-[11px] font-bold text-[#a7898d] border border-[#f7eff0] transition hover:bg-[#fdfafb]">
+                    <span>Line Official</span>
+                    <i class="fa-solid fa-comment text-[#52b788] text-sm pr-1"></i>
+                </a>
+                <a href="https://instagram.com" target="_blank" class="flex items-center justify-between px-3.5 py-2 bg-white/95 backdrop-blur-md rounded-full shadow-md text-[11px] font-bold text-[#a7898d] border border-[#f7eff0] transition hover:bg-[#fdfafb]">
+                    <span>Instagram</span>
+                    <i class="fa-brands fa-instagram text-[#c9184a] text-base pr-0.5"></i>
+                </a>
+                <a href="https://facebook.com" target="_blank" class="flex items-center justify-between px-3.5 py-2 bg-white/95 backdrop-blur-md rounded-full shadow-md text-[11px] font-bold text-[#a7898d] border border-[#f7eff0] transition hover:bg-[#fdfafb]">
+                    <span>Facebook</span>
+                    <i class="fa-brands fa-facebook-f text-[#457b9d] text-sm pr-1"></i>
+                </a>
+            </div>
+            <button onclick="toggleSocialMenu()" class="w-12 h-12 rounded-full bg-[#fceef1] hover:bg-[#f7e0e4] text-[#a7898d] shadow-xl flex items-center justify-center text-lg transition border border-[#f0e6e7]">
+                <i class="fa-solid fa-cat"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== BOOKING SERVICE MODAL ==================== -->
+    <div id="booking-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-[32px] max-w-sm w-full p-6 relative shadow-2xl border border-[#f7eff0] space-y-4 text-xs">
+            <div class="flex justify-between items-center border-b border-[#f7eff0] pb-3">
+                <h3 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-calendar-plus text-[#a7898d] mr-1.5"></i> เลือกบริการจองคิว</h3>
+                <button onclick="closeBookingModal()" class="w-7 h-7 rounded-full bg-[#fdfafb] border border-[#f0e6e7] flex items-center justify-center text-gray-500 hover:bg-[#f5e8ea] transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="grid grid-cols-2 gap-2.5 pt-1">
+                <button onclick="openSignBookingDetails()" class="p-3.5 bg-[#fdfafb] hover:bg-[#f5e8ea] border border-[#f0e6e7] rounded-2xl flex flex-col items-center justify-center font-bold text-gray-700 transition shadow-2xs space-y-1">
+                    <i class="fa-solid fa-image text-[#a7898d] text-base mb-0.5"></i>
+                    <span>ทำป้าย</span>
+                </button>
+                <button onclick="selectService('Commission')" class="p-3.5 bg-[#fdfafb] hover:bg-[#f5e8ea] border border-[#f0e6e7] rounded-2xl flex flex-col items-center justify-center font-bold text-gray-700 transition shadow-2xs space-y-1">
+                    <i class="fa-solid fa-paintbrush text-[#a7898d] text-base mb-0.5"></i>
+                    <span>Commission</span>
+                </button>
+                <button onclick="selectService('เว็บไซต์')" class="p-3.5 bg-[#fdfafb] hover:bg-[#f5e8ea] border border-[#f0e6e7] rounded-2xl flex flex-col items-center justify-center font-bold text-gray-700 transition shadow-2xs space-y-1">
+                    <i class="fa-solid fa-globe text-[#a7898d] text-base mb-0.5"></i>
+                    <span>เว็บไซต์</span>
+                </button>
+                <button onclick="selectService('ทำดิส')" class="p-3.5 bg-[#fdfafb] hover:bg-[#f5e8ea] border border-[#f0e6e7] rounded-2xl flex flex-col items-center justify-center font-bold text-gray-700 transition shadow-2xs space-y-1">
+                    <i class="fa-solid fa-circle-user text-[#a7898d] text-base mb-0.5"></i>
+                    <span>ทำดิส</span>
+                </button>
+                <button onclick="selectService('แต่งฟอร์ม')" class="col-span-2 p-3.5 bg-[#fdfafb] hover:bg-[#f5e8ea] border border-[#f0e6e7] rounded-2xl flex flex-col items-center justify-center font-bold text-gray-700 transition shadow-2xs space-y-1">
+                    <i class="fa-solid fa-file-pen text-[#a7898d] text-base mb-0.5"></i>
+                    <span>แต่งฟอร์ม</span>
+                </button>
             </div>
         </div>
     </div>
 
+    <!-- ==================== SIGN BOOKING DETAILS MODAL ==================== -->
+    <div id="sign-booking-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-[32px] max-w-sm w-full p-5 relative shadow-2xl border border-[#f7eff0] space-y-4 text-xs max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-1">
+                <div class="flex items-center space-x-2 text-gray-800 font-bold text-sm">
+                    <i class="fa-regular fa-image text-gray-500 text-base"></i>
+                    <span>รายละเอียดการจอง: ทำป้าย</span>
+                </div>
+                <button onclick="closeSignBookingDetails()" class="w-7 h-7 rounded-full bg-[#fdfafb] border border-[#f0e6e7] flex items-center justify-center text-gray-500 hover:bg-[#f5e8ea] transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="space-y-2">
+                <label class="font-bold text-gray-700">ตัวอย่างผลงาน</label>
+                <div class="flex space-x-3 overflow-x-auto pb-1 scrollbar-none">
+                    <div class="w-24 h-24 rounded-[20px] overflow-hidden shrink-0 border border-[#f0e6e7] shadow-2xs"><img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover"></div>
+                    <div class="w-24 h-24 rounded-[20px] overflow-hidden shrink-0 border border-[#f0e6e7] shadow-2xs"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover"></div>
+                    <div class="w-24 h-24 rounded-[20px] overflow-hidden shrink-0 border border-[#f0e6e7] shadow-2xs"><img src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover"></div>
+                </div>
+                <button class="w-full py-2.5 bg-[#a7898d] hover:bg-[#927377] text-white rounded-full font-bold text-xs shadow-2xs transition mt-1">ตัวอย่างเพิ่มเติม</button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="font-bold text-gray-700 mb-1 block">ประเภทป้าย</label>
+                    <select id="sign-type" class="w-full px-3.5 py-2.5 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl text-[11px] text-gray-600 focus:outline-none appearance-none">
+                        <option>ป้ายประกาศร้าน</option>
+                        <option>ป้ายรีวิว</option>
+                        <option>ป้ายโปรโมชั่น</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="font-bold text-gray-700 mb-1 block">แนวป้าย</label>
+                    <select id="sign-style" class="w-full px-3.5 py-2.5 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl text-[11px] text-gray-600 focus:outline-none appearance-none">
+                        <option>แนวเจ้าหญิง (พาสเทล)</option>
+                        <option>แนวสดใส (น่ารัก)</option>
+                        <option>แนวเท่ มินิมอล</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <a href="https://example.com" target="_blank" class="w-full py-2.5 bg-[#fdfafb] hover:bg-[#f5e8ea] border border-[#f0e6e7] rounded-2xl font-bold text-gray-600 text-xs shadow-2xs transition flex items-center justify-center gap-1.5 block text-center">
+                    <span>เลือกบล็อก / ตูน</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-[#a7898d]"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 items-start">
+                <div>
+                    <label class="font-bold text-gray-700 mb-1 block">ใส่บล็อก / ตูน ที่เลือก</label>
+                    <label class="w-full py-2.5 px-3 bg-[#fdfafb] hover:bg-[#f5e8ea] border border-[#f0e6e7] rounded-2xl font-bold text-gray-600 text-[11px] shadow-2xs transition flex items-center justify-center gap-1.5 cursor-pointer text-center">
+                        <i class="fa-solid fa-image text-[#a7898d]"></i>
+                        <span id="uploaded-block-count">กดเพิ่มรูป (0)</span>
+                        <input type="file" id="block-images-input" multiple accept="image/*" class="hidden" onchange="handleBlockImagesUpload(this)">
+                    </label>
+                </div>
+                <div>
+                    <label class="font-bold text-gray-700 mb-1 block">จำนวนป้าย</label>
+                    <div class="flex items-center justify-between px-3 py-1.5 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl">
+                        <button onclick="changeSignQty(-1)" class="w-6 h-6 flex items-center justify-center text-gray-500 font-bold hover:bg-gray-100 rounded-full">-</button>
+                        <span id="sign-qty-display" class="font-bold text-gray-800 text-xs">1</span>
+                        <button onclick="changeSignQty(1)" class="w-6 h-6 flex items-center justify-center text-gray-500 font-bold hover:bg-gray-100 rounded-full">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="block-images-preview" class="flex space-x-2 overflow-x-auto pb-1 hidden"></div>
+
+            <div>
+                <label class="font-bold text-gray-700 mb-1 block">รายละเอียดที่จะใส่ในป้าย</label>
+                <input type="text" id="sign-details" placeholder="ระบุข้อความหรือรายละเอียด" class="w-full px-3.5 py-2.5 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl text-[11px] text-gray-600 focus:outline-none">
+            </div>
+
+            <div>
+                <label class="font-bold text-gray-700 mb-1 block">เพิ่มเติม</label>
+                <input type="text" id="sign-extra" placeholder="ระบุเพิ่มเติม (ถ้ามี)" class="w-full px-3.5 py-2.5 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl text-[11px] text-gray-600 focus:outline-none">
+            </div>
+
+            <div class="flex justify-between items-center pt-2 px-1">
+                <span class="font-bold text-gray-700 text-sm">รวมยอด</span>
+                <div class="flex items-center space-x-1">
+                    <span id="sign-total-price" class="font-extrabold text-[#a7898d] text-base">89</span>
+                    <span class="font-extrabold text-[#a7898d] text-sm">฿</span>
+                </div>
+            </div>
+
+            <button onclick="proceedToPayment()" class="w-full py-3.5 bg-[#a7898d] hover:bg-[#927377] text-white rounded-full font-bold text-sm shadow-md transition">ถัดไป</button>
+        </div>
+    </div>
+
+    <!-- ==================== EXACT MATCH PAYMENT MODAL ==================== -->
+    <div id="payment-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-[32px] max-w-sm w-full p-6 relative shadow-2xl border border-[#f7eff0] space-y-4 text-xs max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center pb-1">
+                <div class="flex items-center space-x-2 text-gray-800 font-bold text-sm">
+                    <i class="fa-regular fa-image text-gray-500 text-base"></i>
+                    <span>รายละเอียดการจอง: ทำป้าย</span>
+                </div>
+                <button onclick="closePaymentModal()" class="w-7 h-7 rounded-full bg-[#fdfafb] border border-[#f0e6e7] flex items-center justify-center text-gray-500 hover:bg-[#f5e8ea] transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- ชื่อที่ใช้จอง -->
+            <div>
+                <label class="font-bold text-gray-700 mb-1 block">ชื่อที่ใช้จอง</label>
+                <input type="text" id="pay-name" placeholder="ระบุชื่อของคุณ" class="w-full px-3.5 py-2.5 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl text-[11px] text-gray-600 focus:outline-none">
+            </div>
+
+            <!-- email & id / link line -->
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="font-bold text-gray-700 mb-1 block">email</label>
+                    <input type="email" id="pay-email" placeholder="example@email.com" class="w-full px-3.5 py-2.5 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl text-[11px] text-gray-600 focus:outline-none">
+                </div>
+                <div>
+                    <label class="font-bold text-gray-700 mb-1 block">id / link line</label>
+                    <input type="text" id="pay-line" placeholder="@lineid" class="w-full px-3.5 py-2.5 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl text-[11px] text-gray-600 focus:outline-none">
+                </div>
+            </div>
+
+            <!-- ยอดรวม & ธนาคาร -->
+            <div class="bg-[#fdfafb] border border-[#f0e6e7] p-3.5 rounded-2xl space-y-2">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-gray-700">ยอดรวม :</span>
+                    <span id="pay-total-display" class="font-extrabold text-[#a7898d] text-sm">000 บาท</span>
+                </div>
+                <div class="text-[11px] font-bold text-gray-600">
+                    Kbank : Thipkamon D.
+                </div>
+            </div>
+
+            <!-- โน้ตสลิป -->
+            <div>
+                <label class="font-bold text-gray-700 mb-1 block">โน้ตสลิป</label>
+                <input type="text" id="pay-note" placeholder="โน้ตสลิป (เช่น ค่าทำป้าย 89 บาท)" class="w-full px-3.5 py-2.5 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl text-[11px] text-gray-600 focus:outline-none">
+            </div>
+
+            <!-- QR Code Square (Admin can change) -->
+            <div class="flex flex-col items-center justify-center space-y-1">
+                <div id="qr-code-box" class="w-32 h-32 rounded-[20px] bg-[#fdfafb] border border-[#f0e6e7] overflow-hidden flex items-center justify-center shadow-2xs relative">
+                    <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ThipkamonKBANK" class="w-full h-full object-cover">
+                </div>
+                <span class="text-[9px] text-gray-400">สแกนเพื่อชำระเงิน</span>
+            </div>
+
+            <!-- แนบสลิปโอนเงิน -->
+            <div>
+                <label class="font-bold text-gray-700 mb-1 block">แนบสลิปโอนเงิน</label>
+                <input type="file" id="slip-file-input" accept="image/*" class="w-full px-3.5 py-2 bg-[#fdfafb] border border-[#f0e6e7] rounded-2xl text-[11px] text-gray-500 file:mr-3 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-[10px] file:font-bold file:bg-[#fceef1] file:text-[#a7898d]">
+            </div>
+
+            <button onclick="submitBookingAndFinish()" class="w-full py-3.5 bg-[#a7898d] hover:bg-[#927377] text-white rounded-full font-bold text-sm shadow-md transition">Sent</button>
+        </div>
+    </div>
+
+    <!-- ==================== CART MODAL ==================== -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-[32px] max-w-sm w-full p-5 relative shadow-2xl border border-[#f7eff0] space-y-4 max-h-[80vh] overflow-y-auto text-xs">
+            <div class="flex justify-between items-center border-b border-[#f7eff0] pb-2">
+                <h3 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-basket-shopping text-[#a7898d]"></i> ตะกร้าสินค้า</h3>
+                <button onclick="closeCartModal()" class="w-6 h-6 rounded-full bg-[#fdfafb] border border-[#f7eff0] flex items-center justify-center text-gray-500"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="cart-items-container" class="space-y-2"></div>
+            <div class="border-t border-[#f7eff0] pt-3 flex justify-between items-center font-bold text-sm">
+                <span>ยอดรวม:</span>
+                <span id="cart-total-price" class="text-[#a7898d]">฿0</span>
+            </div>
+            <button onclick="checkoutCart()" class="w-full py-2.5 bg-[#a7898d] text-white rounded-full font-bold shadow-sm">ชำระเงิน</button>
+        </div>
+    </div>
+
+    <!-- ==================== CAT PAW FILTER MODAL ==================== -->
+    <div id="cat-filter-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-[32px] max-w-xs w-full p-5 relative shadow-2xl border border-[#f7eff0] space-y-4 text-xs">
+            <div class="flex justify-between items-center border-b border-[#f7eff0] pb-2">
+                <h3 class="font-bold text-gray-800 text-sm"><i class="fa-solid fa-paw text-[#a7898d]"></i> ตัวกรองสินค้า</h3>
+                <button onclick="closeCatFilterModal()" class="w-6 h-6 rounded-full bg-[#fdfafb] border border-[#f7eff0] flex items-center justify-center text-gray-500"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="space-y-2">
+                <p class="font-bold text-gray-700">ประเภท</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="setFilterType('โปรโมชั่น')" id="type-btn-โปรโมชั่น" class="py-2.5 bg-[#fdfafb] text-[#a7898d] rounded-full font-bold border border-[#f0e6e7] shadow-2xs">โปรโมชั่น</button>
+                    <button onclick="setFilterType('สิทธิ์ขาด')" id="type-btn-สิทธิ์ขาด" class="py-2.5 bg-[#fdfafb] text-gray-500 rounded-full border border-[#f7eff0]">สิทธิ์ขาด</button>
+                    <button onclick="setFilterType('เฉพาะ')" id="type-btn-เฉพาะ" class="py-2.5 bg-[#fdfafb] text-gray-500 rounded-full border border-[#f7eff0]">เฉพาะ</button>
+                </div>
+            </div>
+            <button onclick="applyCatFilter()" class="w-full py-2.5 bg-[#a7898d] text-white rounded-full font-bold shadow-sm">ยืนยัน</button>
+        </div>
+    </div>
+
+    <!-- ==================== ADMIN FULL PAGE BACKOFFICE ==================== -->
+    <div id="admin-full-page" class="hidden min-h-screen bg-gray-50 pb-20">
+        <header class="bg-white border-b sticky top-0 z-40 px-6 py-4 flex justify-between items-center shadow-xs">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-[#fceef1] text-[#a7898d] flex items-center justify-center font-bold border border-[#f0e6e7]"><i class="fa-solid fa-gear"></i></div>
+                <div>
+                    <h1 class="font-bold text-gray-800 text-base">ระบบหลังบ้าน (Admin Dashboard)</h1>
+                </div>
+            </div>
+            <button onclick="closeAdminFullPage()" class="px-4 py-2 bg-[#fdfafb] hover:bg-[#f5e8ea] text-gray-700 border border-[#f7eff0] rounded-full text-xs font-bold transition">กลับหน้าหลัก</button>
+        </header>
+
+        <div class="max-w-4xl mx-auto px-4 pt-4">
+            <div class="flex space-x-2 overflow-x-auto pb-2 scrollbar-none border-b border-[#f7eff0] text-xs">
+                <button onclick="switchAdminSubTab('shop')" id="adm-tab-shop" class="adm-tab px-4 py-2.5 rounded-full font-bold bg-[#a7898d] text-white shrink-0 shadow-2xs">ร้าน/ธีม</button>
+                <button onclick="switchAdminSubTab('products')" id="adm-tab-products" class="adm-tab px-4 py-2.5 rounded-full font-medium bg-white text-gray-600 border border-[#f7eff0] shrink-0">สินค้า (คลาวด์)</button>
+                <button onclick="switchAdminSubTab('queue')" id="adm-tab-queue" class="adm-tab px-4 py-2.5 rounded-full font-medium bg-white text-gray-600 border border-[#f7eff0] shrink-0">คิว</button>
+                <button onclick="switchAdminSubTab('qr')" id="adm-tab-qr" class="adm-tab px-4 py-2.5 rounded-full font-medium bg-white text-gray-600 border border-[#f7eff0] shrink-0">ตั้งค่า QR Code</button>
+            </div>
+        </div>
+
+        <main class="max-w-4xl mx-auto p-4 space-y-4">
+            <div id="adm-content-shop" class="adm-content space-y-4 text-xs bg-white p-5 rounded-[32px] shadow-sm border border-[#f7eff0]">
+                <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-store text-[#a7898d] mr-2"></i>ตั้งค่าร้าน</h3>
+                <div>
+                    <label class="font-bold text-gray-700">ชื่อร้าน</label>
+                    <input type="text" id="adm-shop-name-input" class="w-full mt-1 px-3.5 py-2.5 bg-[#fdfafb] border border-[#f7eff0] rounded-2xl text-xs text-gray-600 focus:outline-none" value="ชื่อร้าน">
+                </div>
+                <button onclick="saveShopThemeSettings()" class="w-full py-3 bg-[#a7898d] text-white rounded-full font-bold text-sm shadow-sm">บันทึก</button>
+            </div>
+
+            <div id="adm-content-products" class="adm-content space-y-4 text-xs bg-white p-5 rounded-[32px] shadow-sm border border-[#f7eff0] hidden">
+                <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-box text-[#a7898d] mr-2"></i>จัดการสินค้า</h3>
+                <div id="admin-products-cloud-list" class="space-y-3"></div>
+            </div>
+
+            <div id="adm-content-queue" class="adm-content space-y-4 text-xs bg-white p-5 rounded-[32px] shadow-sm border border-[#f7eff0] hidden">
+                <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-list-check text-[#a7898d] mr-2"></i>จัดการคิว</h3>
+                <div id="admin-queue-list" class="space-y-2"></div>
+            </div>
+
+            <!-- Admin QR Code Setting Tab -->
+            <div id="adm-content-qr" class="adm-content space-y-4 text-xs bg-white p-5 rounded-[32px] shadow-sm border border-[#f7eff0] hidden">
+                <h3 class="font-bold text-sm text-gray-800"><i class="fa-solid fa-qrcode text-[#a7898d] mr-2"></i>อัปโหลด QR Code ชำระเงิน</h3>
+                <div class="space-y-2">
+                    <label class="font-bold text-gray-700">เลือกรูป QR Code ใหม่</label>
+                    <input type="file" id="admin-qr-file-input" accept="image/*" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-[#fceef1] file:text-[#a7898d]">
+                </div>
+                <button onclick="saveAdminQRCode()" class="w-full py-3 bg-[#a7898d] text-white rounded-full font-bold text-sm shadow-sm">บันทึก QR Code</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- ==================== ADMIN LOGIN MODAL ==================== -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-[32px] max-w-xs w-full p-6 relative shadow-2xl border border-[#f7eff0] space-y-4 text-xs">
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 bg-[#fceef1] text-[#a7898d] rounded-full flex items-center justify-center mx-auto text-lg border border-[#f0e6e7]"><i class="fa-solid fa-chess-rook"></i></div>
+                <h3 class="font-bold text-gray-800 text-base">Admin Login</h3>
+            </div>
+            <input type="password" id="admin-pass-input" value="admin1234" class="w-full px-3.5 py-2.5 bg-[#fdfafb] border border-[#f7eff0] rounded-2xl text-center text-xs text-gray-600 focus:outline-none" placeholder="รหัสผ่าน">
+            <button onclick="verifyAdminLogin()" class="w-full py-2.5 bg-[#a7898d] text-white rounded-full font-bold shadow-sm">Login</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
     <script>
-        // Data & State Management
-        let appData = JSON.parse(localStorage.getItem('cute_shop_data')) || {
+        let currentTab = 'home';
+        let currentUser = null;
+        let activeCategoryFilter = 'All';
+        let currentQueueFilter = 'ทั้งหมด';
+        let currentBookingService = '';
+        let signQty = 1;
+        const pricePerSign = 89;
+        let uploadedBlockImages = [];
+        let globalQRCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ThipkamonKBANK";
+
+        let appState = {
             shopName: "ชื่อร้าน",
-            shopSub: "thx for review",
-            bannerUrl: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80",
-            avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
-            lineUrl: "https://line.me",
-            igUrl: "https://instagram.com",
-            fbUrl: "https://facebook.com",
-            theme: "pink",
-            reviews: []
+            announcement: "🎉 โปรโมชั่นพิเศษต้อนรับเดือนนี้! ซื้อครบ 500 บาทสะสมแต้มฟรี!",
+            categories: [
+                { id: 'All', name: 'All' },
+                { id: 'momonga', name: 'momonga' },
+                { id: 'mimiw', name: 'mimiw' }
+            ],
+            products: [
+                { id: 1, name: "ชื่อกลุ่ม", price: 50, category: 'All', featured: true, img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=500&q=500" },
+                { id: 2, name: "ชื่อกลุ่ม", price: 50, category: 'All', featured: true, img: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=500&q=500" }
+            ],
+            queues: [
+                { id: 101, name: "k'sobell", service: "ปกกลุ่มแนวเจ้าหญิง", date: "11/09/69", status: "เสร็จแล้ว", seq: 1 },
+                { id: 102, name: "ไม่ทราบ", service: "Sign", date: "15/09/69", status: "กำลังทำ", seq: 2 }
+            ],
+            cart: []
         };
 
-        let selectedRating = 0;
-        let tempPhotoBase64 = "";
+        function switchTab(tabId) {
+            currentTab = tabId;
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
 
-        // DOM Elements
-        const displayBanner = document.getElementById('displayBanner');
-        const displayAvatar = document.getElementById('displayAvatar');
-        const displayShopName = document.getElementById('displayShopName');
-        const displayShopSub = document.getElementById('displayShopSub');
-        const statReviewsCount = document.getElementById('statReviewsCount');
-        const statRatingVal = document.getElementById('statRatingVal');
-        const reviewsListContainer = document.getElementById('reviewsListContainer');
-
-        const inputName = document.getElementById('inputName');
-        const inputText = document.getElementById('inputText');
-        const inputPhotoFile = document.getElementById('inputPhotoFile');
-        const fileNameDisplay = document.getElementById('fileNameDisplay');
-        const starPicker = document.getElementById('starPicker');
-        const submitReviewBtn = document.getElementById('submitReviewBtn');
-
-        const catBtn = document.getElementById('catBtn');
-        const contactPopup = document.getElementById('contactPopup');
-        const linkLine = document.getElementById('linkLine');
-        const linkIg = document.getElementById('linkIg');
-        const linkFb = document.getElementById('linkFb');
-
-        const settingsBtn = document.getElementById('settingsBtn');
-        const adminModal = document.getElementById('adminModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const loginSection = document.getElementById('loginSection');
-        const dashboardSection = document.getElementById('dashboardSection');
-        const adminPassInput = document.getElementById('adminPassInput');
-        const rememberMeCheck = document.getElementById('rememberMeCheck');
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutAdminBtn = document.getElementById('logoutAdminBtn');
-
-        const editShopName = document.getElementById('editShopName');
-        const editShopSub = document.getElementById('editShopSub');
-        const editBannerFile = document.getElementById('editBannerFile');
-        const editAvatarFile = document.getElementById('editAvatarFile');
-        const editLineLink = document.getElementById('editLineLink');
-        const editIgLink = document.getElementById('editIgLink');
-        const editFbLink = document.getElementById('editFbLink');
-        const saveAdminConfig = document.getElementById('saveAdminConfig');
-        const adminReviewsList = document.getElementById('adminReviewsList');
-        const presetPink = document.getElementById('presetPink');
-        const presetCream = document.getElementById('presetCream');
-
-        const musicBtn = document.getElementById('musicBtn');
-
-        // Init App UI
-        function renderApp() {
-            displayBanner.src = appData.bannerUrl;
-            displayAvatar.src = appData.avatarUrl;
-            displayShopName.textContent = appData.shopName;
-            displayShopSub.textContent = appData.shopSub;
-
-            linkLine.href = appData.lineUrl;
-            linkIg.href = appData.igUrl;
-            linkFb.href = appData.fbUrl;
-
-            // Stats
-            const count = appData.reviews.length;
-            statReviewsCount.textContent = count;
-            if (count > 0) {
-                const totalRating = appData.reviews.reduce((sum, r) => sum + r.rating, 0);
-                statRatingVal.textContent = (totalRating / count).toFixed(1);
-            } else {
-                statRatingVal.textContent = "0.0";
-            }
-
-            // Render Reviews List
-            reviewsListContainer.innerHTML = "";
-            if (count === 0) {
-                reviewsListContainer.innerHTML = `<div style="text-align:center; color:var(--text-sub); font-size:13px; padding:20px;">ยังไม่มีรีวิว มาเป็นคนแรกกันเถอะ!</div>`;
-            } else {
-                appData.reviews.forEach((r, idx) => {
-                    const card = document.createElement('div');
-                    card.className = 'review-card';
-                    card.innerHTML = `
-                        <div class="review-header">
-                            <span class="review-author">${escapeHtml(r.name)}</span>
-                            <span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
-                        </div>
-                        <div class="review-text">${escapeHtml(r.text)}</div>
-                        ${r.photo ? `<img src="${r.photo}" class="review-img">` : ''}
-                    `;
-                    reviewsListContainer.appendChild(card);
-                });
-            }
-
-            applyTheme(appData.theme);
-        }
-
-        function escapeHtml(text) {
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
-
-        function applyTheme(theme) {
-            const root = document.documentElement;
-            if (theme === 'cream') {
-                root.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #f5ebe0 0%, #e3d5ca 50%, #d5bdaf 100%)');
-                root.style.setProperty('--text-main', '#5c4033');
-                root.style.setProperty('--text-sub', '#8c7365');
-                root.style.setProperty('--accent-color', '#b08968');
-                root.style.setProperty('--border-color', '#eedecc');
-            } else {
-                root.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f3e5f5 100%)');
-                root.style.setProperty('--text-main', '#886f6f');
-                root.style.setProperty('--text-sub', '#b09e9e');
-                root.style.setProperty('--accent-color', '#d4a5a5');
-                root.style.setProperty('--border-color', '#f0e6e6');
-            }
-        }
-
-        // Star Picker for Form
-        const stars = starPicker.querySelectorAll('span');
-        stars.forEach(s => {
-            s.addEventListener('click', () => {
-                selectedRating = parseInt(s.getAttribute('data-value'));
-                stars.forEach((st, idx) => {
-                    if (idx < selectedRating) st.classList.add('active');
-                    else st.classList.remove('active');
-                });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-[#a7898d]');
+                btn.classList.add('text-gray-400');
             });
-        });
+            document.getElementById(`nav-btn-${tabId}`).classList.remove('text-gray-400');
+            document.getElementById(`nav-btn-${tabId}`).classList.add('text-[#a7898d]');
 
-        // Photo Upload for Review
-        inputPhotoFile.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                fileNameDisplay.textContent = file.name;
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    tempPhotoBase64 = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                fileNameDisplay.textContent = "ยังไม่ได้เลือกรูปภาพ";
-                tempPhotoBase64 = "";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if(tabId === 'products') renderProducts();
+            if(tabId === 'queue') renderQueues();
+        }
+
+        function initApp() {
+            document.getElementById('announcement-text').innerText = appState.announcement;
+            document.getElementById('home-shop-name').innerText = appState.shopName;
+            document.getElementById('shop-title-header').innerText = appState.shopName;
+            renderCategoriesTabs();
+            renderRecommendedProducts();
+            updateCartBadge();
+        }
+
+        function openBookingModal() { document.getElementById('booking-modal').classList.remove('hidden'); }
+        function closeBookingModal() { document.getElementById('booking-modal').classList.add('hidden'); }
+
+        function openSignBookingDetails() {
+            closeBookingModal();
+            signQty = 1;
+            uploadedBlockImages = [];
+            document.getElementById('sign-qty-display').innerText = signQty;
+            document.getElementById('sign-total-price').innerText = signQty * pricePerSign;
+            document.getElementById('uploaded-block-count').innerText = "กดเพิ่มรูป (0)";
+            document.getElementById('block-images-preview').classList.add('hidden');
+            document.getElementById('sign-booking-modal').classList.remove('hidden');
+        }
+        function closeSignBookingDetails() { document.getElementById('sign-booking-modal').classList.add('hidden'); }
+
+        function changeSignQty(amount) {
+            signQty += amount;
+            if(signQty < 1) signQty = 1;
+            document.getElementById('sign-qty-display').innerText = signQty;
+            document.getElementById('sign-total-price').innerText = signQty * pricePerSign;
+        }
+
+        function handleBlockImagesUpload(input) {
+            if (input.files && input.files.length > 0) {
+                for (let i = 0; i < input.files.length; i++) {
+                    uploadedBlockImages.push(URL.createObjectURL(input.files[i]));
+                }
+                document.getElementById('uploaded-block-count').innerText = `เลือกแล้ว (${uploadedBlockImages.length})`;
+                
+                const previewContainer = document.getElementById('block-images-preview');
+                previewContainer.classList.remove('hidden');
+                previewContainer.innerHTML = uploadedBlockImages.map((src, idx) => `
+                    <div class="w-16 h-16 rounded-[14px] overflow-hidden shrink-0 border border-[#f0e6e7] relative shadow-2xs">
+                        <img src="${src}" class="w-full h-full object-cover">
+                    </div>
+                `).join('');
             }
-        });
+        }
 
-        // Submit Review
-        submitReviewBtn.addEventListener('click', () => {
-            const name = inputName.value.trim();
-            const text = inputText.value.trim();
+        function proceedToPayment() {
+            currentBookingService = 'ทำป้าย';
+            const total = signQty * pricePerSign;
+            document.getElementById('pay-total-display').innerText = `${total} บาท`;
+            document.getElementById('qr-code-img').src = globalQRCodeUrl;
+            closeSignBookingDetails();
+            document.getElementById('payment-modal').classList.remove('hidden');
+        }
 
-            if (!name) {
-                alert('กรุณากรอกชื่อของคุณ');
+        function closePaymentModal() { document.getElementById('payment-modal').classList.add('hidden'); }
+
+        function submitBookingAndFinish() {
+            const name = document.getElementById('pay-name').value.trim();
+            const email = document.getElementById('pay-email').value.trim();
+            const line = document.getElementById('pay-line').value.trim();
+            const slipInput = document.getElementById('slip-file-input');
+
+            if (!name || !email || !line) {
+                alert("กรุณากรอก ชื่อ, email และ id / link line ให้ครบถ้วนค่ะ");
                 return;
             }
-            if (selectedRating === 0) {
-                alert('กรุณาให้คะแนนดาว');
-                return;
-            }
-            if (!text) {
-                alert('กรุณากรอกข้อความรีวิว');
+
+            if (slipInput.files.length === 0) {
+                alert("กรุณาแนบสลิปโอนเงินก่อนกดยืนยันค่ะ");
                 return;
             }
 
-            const newReview = {
+            // เพิ่มคิวใหม่เข้าไปในระบบ
+            const newSeq = appState.queues.length + 1;
+            appState.queues.push({
                 id: Date.now(),
                 name: name,
-                rating: selectedRating,
-                text: text,
-                photo: tempPhotoBase64
-            };
+                service: `${currentBookingService} (${document.getElementById('sign-style').value})`,
+                date: "11/09/69",
+                status: "ยังไม่ได้เริ่ม",
+                seq: newSeq
+            });
 
-            appData.reviews.unshift(newReview);
-            localStorage.setItem('cute_shop_data', JSON.stringify(appData));
-
-            // Reset form
-            inputName.value = "";
-            inputText.value = "";
-            inputPhotoFile.value = "";
-            fileNameDisplay.textContent = "ยังไม่ได้เลือกรูปภาพ";
-            tempPhotoBase64 = "";
-            selectedRating = 0;
-            stars.forEach(st => st.classList.remove('active'));
-
-            renderApp();
-            alert('ส่งรีวิวสำเร็จ ขอบคุณค่ะ! 💕');
-        });
-
-        // Contact Popup Toggle
-        catBtn.addEventListener('click', () => {
-            contactPopup.classList.toggle('show');
-        });
-
-        window.addEventListener('click', (e) => {
-            if (!catBtn.contains(e.target) && !contactPopup.contains(e.target)) {
-                contactPopup.classList.remove('show');
-            }
-        });
-
-        // Admin Modal & Login
-        settingsBtn.addEventListener('click', () => {
-            adminModal.style.display = 'flex';
-            if (localStorage.getItem('admin_logged_in') === 'true') {
-                showAdminDashboard();
-            } else {
-                loginSection.style.display = 'block';
-                dashboardSection.style.display = 'none';
-            }
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            adminModal.style.display = 'none';
-        });
-
-        loginBtn.addEventListener('click', () => {
-            const pass = adminPassInput.value;
-            if (pass === '1234') {
-                if (rememberMeCheck.checked) {
-                    localStorage.setItem('admin_logged_in', 'true');
-                }
-                showAdminDashboard();
-            } else {
-                alert('รหัสผ่านไม่ถูกต้อง (ค่าเริ่มต้นคือ 1234)');
-            }
-        });
-
-        logoutAdminBtn.addEventListener('click', () => {
-            localStorage.removeItem('admin_logged_in');
-            loginSection.style.display = 'block';
-            dashboardSection.style.display = 'none';
-            adminPassInput.value = "";
-        });
-
-        function showAdminDashboard() {
-            loginSection.style.display = 'none';
-            dashboardSection.style.display = 'block';
-
-            editShopName.value = appData.shopName;
-            editShopSub.value = appData.shopSub;
-            editLineLink.value = appData.lineUrl;
-            editIgLink.value = appData.igUrl;
-            editFbLink.value = appData.fbUrl;
-
-            renderAdminReviews();
+            closePaymentModal();
+            alert("ส่งสลิปและจองคิวสำเร็จ! ระบบกำลังพาไปหน้าเช็คคิว");
+            switchTab('queue');
         }
 
-        function renderAdminReviews() {
-            adminReviewsList.innerHTML = "";
-            if (appData.reviews.length === 0) {
-                adminReviewsList.innerHTML = `<div style="font-size:12px; color:#888; text-align:center;">ยังไม่มีรีวิวในระบบ</div>`;
+        function selectService(serviceName) {
+            closeBookingModal();
+            currentBookingService = serviceName;
+            document.getElementById('pay-total-display').innerText = `89 บาท`;
+            document.getElementById('qr-code-img').src = globalQRCodeUrl;
+            document.getElementById('payment-modal').classList.remove('hidden');
+        }
+
+        function toggleSocialMenu() { document.getElementById('social-menu-popup').classList.toggle('hidden'); }
+
+        function renderCategoriesTabs() {
+            const container = document.getElementById('categories-tabs-container');
+            if(!container) return;
+            container.innerHTML = appState.categories.map(c => `
+                <button onclick="setCategory('${c.id}')" class="px-5 py-2 rounded-full text-xs font-medium ${activeCategoryFilter === c.id ? 'bg-[#a7898d] text-white font-bold shadow-xs' : 'bg-white text-gray-500 border border-[#f7eff0]'} shrink-0 transition">${c.name}</button>
+            `).join('');
+        }
+        function setCategory(catId) { activeCategoryFilter = catId; renderCategoriesTabs(); renderProducts(); }
+        function openCatFilterModal() { document.getElementById('cat-filter-modal').classList.remove('hidden'); }
+        function closeCatFilterModal() { document.getElementById('cat-filter-modal').classList.add('hidden'); }
+
+        function renderRecommendedProducts() {
+            const container = document.getElementById('recommended-products-list');
+            if(!container) return;
+            container.innerHTML = appState.products.filter(p => p.featured).map(p => `
+                <div class="bg-white rounded-[32px] p-4 border border-[#f0e6e7] shadow-2xs flex flex-col justify-between space-y-3 relative">
+                    <div class="absolute top-6 left-6 px-3 py-0.5 bg-white/90 backdrop-blur-xs text-[#a7898d] text-[10px] font-extrabold rounded-full z-10 border border-[#f0e6e7] shadow-2xs">แนะนำ</div>
+                    <div class="aspect-square w-full rounded-[24px] bg-[#fdfafb] overflow-hidden border border-[#f7eff0]">
+                        <img src="${p.img}" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <div class="flex justify-between items-center px-1">
+                        <span class="font-bold text-xs text-gray-800">${p.name}</span>
+                        <span class="font-extrabold text-[#a7898d] text-xs">${p.price} ฿</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 pt-0.5">
+                        <button onclick="alert('ดูรายละเอียดเพิ่มเติม')" class="py-2.5 bg-white text-[#a7898d] border border-[#f0e6e7] rounded-full text-[11px] font-bold shadow-2xs hover:bg-[#fdfafb] transition text-center">Ex</button>
+                        <button onclick="addToCart(${p.id})" class="py-2.5 bg-[#a7898d] hover:bg-[#927377] text-white rounded-full text-[11px] font-bold shadow-2xs transition text-center">add to cart</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            if(!grid) return;
+            const searchVal = document.getElementById('product-search-input').value.toLowerCase();
+            const filtered = appState.products.filter(p => {
+                const matchCat = activeCategoryFilter === 'All' || p.category === activeCategoryFilter;
+                const matchSearch = p.name.toLowerCase().includes(searchVal);
+                return matchCat && matchSearch;
+            });
+            
+            document.getElementById('product-count-label').innerText = `${filtered.length} items`;
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="bg-white rounded-[32px] p-4 border border-[#f0e6e7] shadow-2xs flex flex-col justify-between space-y-3 relative">
+                    <div class="absolute top-6 left-6 px-3 py-0.5 bg-white/90 backdrop-blur-xs text-[#a7898d] text-[10px] font-extrabold rounded-full z-10 border border-[#f0e6e7] shadow-2xs">แนะนำ</div>
+                    <div class="aspect-square w-full rounded-[24px] bg-[#fdfafb] overflow-hidden border border-[#f7eff0]">
+                        <img src="${p.img}" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <div class="flex justify-between items-center px-1">
+                        <span class="font-bold text-xs text-gray-800">${p.name}</span>
+                        <span class="font-extrabold text-[#a7898d] text-xs">${p.price} ฿</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 pt-0.5">
+                        <button onclick="alert('ดูรายละเอียดเพิ่มเติม')" class="py-2.5 bg-white text-[#a7898d] border border-[#f0e6e7] rounded-full text-[11px] font-bold shadow-2xs hover:bg-[#fdfafb] transition text-center">Ex</button>
+                        <button onclick="addToCart(${p.id})" class="py-2.5 bg-[#a7898d] hover:bg-[#927377] text-white rounded-full text-[11px] font-bold shadow-2xs transition text-center">add to cart</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(productId) {
+            const p = appState.products.find(x => x.id === productId);
+            if(p) { appState.cart.push(p); updateCartBadge(); }
+        }
+        function updateCartBadge() { document.getElementById('cart-badge').innerText = appState.cart.length; }
+        function openCartModal() {
+            const container = document.getElementById('cart-items-container');
+            let total = 0;
+            container.innerHTML = appState.cart.map((item, idx) => {
+                total += item.price;
+                return `<div class="flex justify-between items-center bg-[#fdfafb] p-2.5 rounded-2xl border border-[#f7eff0]"><span>${item.name}</span><span class="text-[#a7898d] font-bold">฿${item.price}</span></div>`;
+            }).join('') || '<p class="text-center text-gray-400">ว่างเปล่า</p>';
+            document.getElementById('cart-total-price').innerText = `฿${total.toLocaleString()}`;
+            document.getElementById('cart-modal').classList.remove('hidden');
+        }
+        function closeCartModal() { document.getElementById('cart-modal').classList.add('hidden'); }
+        function checkoutCart() { alert("สั่งซื้อสำเร็จ!"); appState.cart = []; updateCartBadge(); closeCartModal(); }
+
+        // Auth
+        function switchAuthMode(m) {
+            if(m === 'login') { document.getElementById('form-login').classList.remove('hidden'); document.getElementById('form-register').classList.add('hidden'); }
+            else { document.getElementById('form-register').classList.remove('hidden'); document.getElementById('form-login').classList.add('hidden'); }
+        }
+        function handleRegister() { currentUser = { name: document.getElementById('reg-name').value, points: 0 }; updateAccUI(); alert("สมัครสำเร็จ!"); }
+        function handleLogin() { currentUser = { name: "คุณสมาชิก", points: 100 }; updateAccUI(); alert("เข้าสู่ระบบสำเร็จ!"); }
+        function handleLogout() { currentUser = null; updateAccUI(); }
+        function updateAccUI() {
+            if(!currentUser) { document.getElementById('auth-container').classList.remove('hidden'); document.getElementById('customer-profile-view').classList.add('hidden'); }
+            else { document.getElementById('auth-container').classList.add('hidden'); document.getElementById('customer-profile-view').classList.remove('hidden'); document.getElementById('acc-name-display').innerText = currentUser.name; }
+        }
+
+        function setQueueFilter(filter) {
+            currentQueueFilter = filter;
+            ['ทั้งหมด', 'ยังไม่ได้เริ่ม', 'กำลังทำ', 'เสร็จแล้ว'].forEach(f => {
+                const btn = document.getElementById(`q-filter-${f}`);
+                if(btn) {
+                    if(f === filter) {
+                        btn.className = "flex-1 px-3 py-2.5 rounded-full text-[10px] font-extrabold text-[#a7898d] bg-white shadow-xs transition";
+                    } else {
+                        btn.className = "flex-1 px-3 py-2.5 rounded-full text-[10px] font-medium text-[#c0aab1] bg-transparent transition";
+                    }
+                }
+            });
+            renderQueues();
+        }
+        
+        function renderQueues() {
+            const container = document.getElementById('queue-list-container');
+            const searchVal = document.getElementById('queue-search-input').value.toLowerCase();
+
+            const filtered = appState.queues.filter(q => {
+                const matchFilter = currentQueueFilter === 'ทั้งหมด' || q.status === currentQueueFilter;
+                const matchSearch = q.name.toLowerCase().includes(searchVal) || q.service.toLowerCase().includes(searchVal);
+                return matchFilter && matchSearch;
+            });
+
+            if(filtered.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-400 py-8 text-xs">ไม่พบรายการคิว</p>`;
                 return;
             }
 
-            appData.reviews.forEach((r, idx) => {
-                const item = document.createElement('div');
-                item.className = 'admin-review-item';
-                item.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:bold;">
-                        <span>#${idx+1} - ${escapeHtml(r.name)} (${r.rating} ดาว)</span>
-                    </div>
-                    <div style="font-size:12px; color:#555;">${escapeHtml(r.text)}</div>
-                    <div class="btn-group">
-                        <button class="mini-btn btn-delete" onclick="deleteReview(${r.id})">ลบรีวิว</button>
+            container.innerHTML = filtered.map(q => {
+                let isDone = q.status === 'เสร็จแล้ว';
+                
+                let cardBorder = 'border-[#a7898d] shadow-sm';
+                let circleBorder = 'border-[#a7898d]';
+                let circleText = 'text-[#a7898d]';
+                
+                let nameText = 'text-[#a7898d]';
+                let serviceText = 'text-[#8c6b70]';
+
+                let statusBadge = '';
+                if(isDone) {
+                    statusBadge = `<div class="px-5 py-2 bg-[#fdfafb] border border-[#f0e6e7] rounded-full text-[11px] font-bold text-[#a7898d] shadow-2xs">เสร็จแล้ว</div>`;
+                } else if(q.status === 'กำลังทำ') {
+                    statusBadge = `<div class="px-5 py-2 bg-[#fdfafb] border border-[#f0e6e7] rounded-full text-[11px] font-extrabold text-[#a7898d] shadow-2xs">กำลังทำ</div>`;
+                } else {
+                    statusBadge = `<div class="px-5 py-2 bg-[#fdfafb] border border-[#f0e6e7] rounded-full text-[11px] font-bold text-gray-400 shadow-2xs">ยังไม่ได้เริ่ม</div>`;
+                }
+
+                return `
+                    <div class="bg-white rounded-[24px] p-4.5 border-[1.5px] ${cardBorder} relative mt-6 transition-all">
+                        <!-- Q Badge on Top-Left border -->
+                        <div class="absolute -top-3.5 left-5 w-8 h-8 rounded-full bg-white border-[1.5px] ${circleBorder} flex items-center justify-center text-[10px] font-extrabold ${circleText} z-10 shadow-2xs">
+                            Q${q.seq || 2}
+                        </div>
+
+                        <!-- Card Content Without Red Dotted Line -->
+                        <div class="px-2 flex justify-between items-center">
+                            <div class="space-y-1">
+                                <div class="flex items-center space-x-2.5">
+                                    <span class="font-extrabold text-sm ${nameText}">${q.name}</span>
+                                    <span class="px-2.5 py-0.5 bg-white border ${circleBorder} rounded-full text-[9px] font-extrabold ${nameText} tracking-wider">LINE</span>
+                                </div>
+                                <p class="text-xs font-extrabold ${serviceText}">${q.service}</p>
+                            </div>
+                            <div>
+                                ${statusBadge}
+                            </div>
+                        </div>
                     </div>
                 `;
-                adminReviewsList.appendChild(item);
-            });
+            }).join('');
         }
 
-        window.deleteReview = function(id) {
-            if (confirm('คุณต้องการลบรีวิวนี้ใช่หรือไม่?')) {
-                appData.reviews = appData.reviews.filter(r => r.id !== id);
-                localStorage.setItem('cute_shop_data', JSON.stringify(appData));
-                renderApp();
-                renderAdminReviews();
-            }
-        };
-
-        presetPink.addEventListener('click', () => {
-            appData.theme = 'pink';
-            applyTheme('pink');
-        });
-
-        presetCream.addEventListener('click', () => {
-            appData.theme = 'cream';
-            applyTheme('cream');
-        });
-
-        // Save Admin Config with Local Images
-        saveAdminConfig.addEventListener('click', async () => {
-            appData.shopName = editShopName.value.trim() || "ชื่อร้าน";
-            appData.shopSub = editShopSub.value.trim() || "";
-            appData.lineUrl = editLineLink.value.trim() || "#";
-            appData.igUrl = editIgLink.value.trim() || "#";
-            appData.fbUrl = editFbLink.value.trim() || "#";
-
-            // Handle Banner File Upload
-            if (editBannerFile.files[0]) {
-                appData.bannerUrl = await fileToBase64(editBannerFile.files[0]);
-            }
-
-            // Handle Avatar File Upload
-            if (editAvatarFile.files[0]) {
-                appData.avatarUrl = await fileToBase64(editAvatarFile.files[0]);
-            }
-
-            localStorage.setItem('cute_shop_data', JSON.stringify(appData));
-            renderApp();
-            alert('บันทึกข้อมูลสำเร็จเรียบร้อยค่ะ! ✨');
-            adminModal.style.display = 'none';
-        });
-
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-                reader.readAsDataURL(file);
-            });
+        // Admin
+        function openAdminLoginModal() { document.getElementById('admin-login-modal').classList.remove('hidden'); }
+        function verifyAdminLogin() {
+            if(document.getElementById('admin-pass-input').value === "admin1234") {
+                document.getElementById('admin-login-modal').classList.add('hidden');
+                document.getElementById('main-shop-container').classList.add('hidden');
+                document.getElementById('admin-full-page').classList.remove('hidden');
+            } else { alert("รหัสผ่านไม่ถูกต้อง"); }
+        }
+        function closeAdminFullPage() {
+            document.getElementById('admin-full-page').classList.add('hidden');
+            document.getElementById('main-shop-container').classList.remove('hidden');
+            initApp();
         }
 
-        // Web Audio API Background Music
-        let audioCtx = null;
-        let isPlayingMusic = false;
-        let musicInterval = null;
+        function switchAdminSubTab(subTabId) {
+            document.querySelectorAll('.adm-tab').forEach(btn => {
+                btn.className = "adm-tab px-4 py-2.5 rounded-full font-medium bg-white text-gray-600 border border-[#f7eff0] shrink-0";
+            });
+            document.getElementById(`adm-tab-${subTabId}`).className = "adm-tab px-4 py-2.5 rounded-full font-bold bg-[#a7898d] text-white shrink-0 shadow-2xs";
 
-        musicBtn.addEventListener('click', () => {
-            if (!isPlayingMusic) {
-                startMusic();
-                musicBtn.textContent = "🔊";
-                isPlayingMusic = true;
+            document.querySelectorAll('.adm-content').forEach(c => c.classList.add('hidden'));
+            document.getElementById(`adm-content-${subTabId}`).classList.remove('hidden');
+        }
+
+        function saveAdminQRCode() {
+            const qrFileInput = document.getElementById('admin-qr-file-input');
+            if(qrFileInput.files && qrFileInput.files[0]) {
+                globalQRCodeUrl = URL.createObjectURL(qrFileInput.files[0]);
+                alert("อัปโหลด QR Code สำเร็จ!");
             } else {
-                stopMusic();
-                musicBtn.textContent = "🎵";
-                isPlayingMusic = false;
-            }
-        });
-
-        function startMusic() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-
-            // Cute lullaby sequence notes (C, E, G, A)
-            const notes = [261.63, 329.63, 392.00, 440.00, 523.25];
-            let index = 0;
-
-            musicInterval = setInterval(() => {
-                if (!isPlayingMusic) return;
-                playTone(notes[index % notes.length], 0.3);
-                index++;
-            }, 600);
-        }
-
-        function stopMusic() {
-            if (musicInterval) {
-                clearInterval(musicInterval);
-                musicInterval = null;
+                alert("กรุณาเลือกรูป QR Code ครับ");
             }
         }
 
-        function playTone(freq, duration) {
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
-        }
-
-        // Falling Hearts & Stars Generator
-        const fallingContainer = document.getElementById('fallingContainer');
-        const symbols = ['💖', '✨', '⭐', '🌸', '🤍'];
-
-        function createFallingItem() {
-            const item = document.createElement('div');
-            item.className = 'falling-item';
-            item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-            item.style.left = Math.random() * 100 + 'vw';
-            item.style.fontSize = (Math.random() * 12 + 14) + 'px';
-            
-            const duration = Math.random() * 6 + 6; // 6 to 12 seconds slow fall
-            item.style.animationDuration = duration + 's';
-            
-            fallingContainer.appendChild(item);
-
-            setTimeout(() => {
-                item.remove();
-            }, duration * 1000);
-        }
-
-        // Start falling immediately upon loading
-        setInterval(createFallingItem, 700);
-        for(let i=0; i<6; i++) {
-            setTimeout(createFallingItem, i * 200);
-        }
-
-        // Initial render on load
-        renderApp();
+        window.onload = function() {
+            initApp();
+            renderQueues();
+        };
     </script>
 </body>
 </html>
