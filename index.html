@@ -3,214 +3,1074 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ช่อร้าน</title>
-    <!-- Google Fonts: Kanit & Mali for cute Japanese style -->
-    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;500;600;700&family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sakura: {
-                            50: '#fdf2f4',
-                            100: '#fbe8ec',
-                            200: '#f5d3db',
-                            300: '#edb1be',
-                            400: '#e08397',
-                            500: '#cf5a73',
-                            pinkbg: '#d8b4bc',
-                        }
-                    },
-                    fontFamily: {
-                        mali: ['Mali', 'sans-serif'],
-                        kanit: ['Kanit', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Review & Contact</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f3e5f5 100%);
+            --card-bg: #ffffff;
+            --text-main: #886f6f;
+            --text-sub: #b09e9e;
+            --accent-color: #d4a5a5;
+            --border-color: #f0e6e6;
+            --shadow-color: rgba(200, 160, 160, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+        }
+
         body {
-            font-family: 'Kanit', sans-serif;
-            background-color: #d8b4bc;
-            color: #5c4b51;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 10px;
+            color: var(--text-main);
             overflow-x: hidden;
+            position: relative;
         }
-        .font-cute {
-            font-family: 'Mali', cursive, sans-serif;
+
+        /* Falling Hearts & Stars Animation */
+        .falling-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
         }
-        /* Falling Animation */
+
+        .falling-item {
+            position: absolute;
+            top: -10%;
+            user-select: none;
+            animation: fall linear infinite;
+            opacity: 0.7;
+        }
+
         @keyframes fall {
             0% {
                 transform: translateY(-10vh) translateX(0) rotate(0deg);
-                opacity: 1;
+                opacity: 0.8;
             }
             100% {
-                transform: translateY(105vh) translateX(50px) rotate(360deg);
+                transform: translateY(110vh) translateX(50px) rotate(360deg);
                 opacity: 0.2;
             }
         }
-        .falling-item {
+
+        /* Top Right Buttons */
+        .top-controls {
             position: fixed;
-            top: -10vh;
-            z-index: 50;
-            user-select: none;
-            pointer-events: none;
-            animation: fall linear infinite;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
         }
-        /* Soft shadows & Glassmorphism */
-        .soft-card {
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s, background 0.2s;
+            font-size: 18px;
+            color: var(--text-main);
+        }
+
+        .icon-btn:hover {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        /* Main Container Card */
+        .phone-container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-bg);
+            border-radius: 35px;
+            box-shadow: 0 15px 35px var(--shadow-color);
+            padding: 15px;
+            position: relative;
+            z-index: 10;
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            margin-bottom: 50px;
+        }
+
+        /* Banner Cover */
+        .banner-box {
+            width: 100%;
+            height: 170px;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 2px solid #fdeef2;
+            position: relative;
+            background: #fdf5f7;
+        }
+
+        .banner-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            text-align: center;
+            margin-top: -45px;
+            position: relative;
+        }
+
+        .avatar-box {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+            overflow: hidden;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .avatar-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .shop-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-top: 8px;
+        }
+
+        .shop-sub {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* Stats Card */
+        .stats-card {
             background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 8px 30px rgba(207, 90, 115, 0.08);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 15px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
-        .banner-radius {
-            border-radius: 24px;
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
         }
-        .status-badge {
-            background: #faf5f6;
-            border: 1px solid #f2e3e6;
-            border-radius: 50px;
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
         }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        .stat-divider {
+            width: 1px;
+            height: 30px;
+            background: var(--border-color);
+        }
+
+        .star-icon {
+            color: #d4a5a5;
+            display: inline-block;
+        }
+
+        /* Review Form Box */
+        .review-form-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            padding: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            background: #faf6f6;
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .star-picker {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .star-picker span {
+            color: #ddd;
+            transition: color 0.2s;
+        }
+
+        .star-picker span.active {
+            color: #fbc02d;
+        }
+
+        .form-row-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #faf6f6;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            padding: 8px 15px;
+        }
+
+        .cam-btn {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .file-name-display {
+            font-size: 13px;
+            color: var(--text-sub);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #d4a5a5 0%, #c28e8e 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(212, 165, 165, 0.3);
+            transition: opacity 0.2s;
+            text-align: center;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Review List */
+        .reviews-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .review-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .review-author {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .review-stars {
+            color: #fbc02d;
+            font-size: 13px;
+        }
+
+        .review-text {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.4;
+            word-break: break-all;
+        }
+
+        .review-img {
+            margin-top: 10px;
+            width: 100%;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* Floating Cat Contact Button & Popup */
+        .floating-contact-wrapper {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .cat-btn {
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid #fce4ec;
+            transition: transform 0.2s;
+            font-size: 26px;
+        }
+
+        .cat-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .contact-popup {
+            background: #fff;
+            border-radius: 20px;
+            padding: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 180px;
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.25s ease;
+        }
+
+        .contact-popup.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 500;
+            background: #faf6f6;
+            transition: background 0.2s;
+        }
+
+        .contact-link:hover {
+            background: #f0e6e6;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-card {
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        .modal-close {
+            background: #eee;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            float: right;
+            margin-top: -5px;
+        }
+
+        .admin-section {
+            margin-bottom: 15px;
+        }
+
+        .admin-section label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-sub);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .admin-review-item {
+            background: #faf6f6;
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .mini-btn {
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-edit { background: #e3f2fd; color: #1976d2; }
+        .btn-delete { background: #ffebee; color: #c62828; }
+        .btn-save { background: #e8f5e9; color: #2e7d32; }
+
     </style>
 </head>
-<body class="min-h-screen flex justify-center items-center py-0 md:py-6">
+<body>
 
-    <!-- Falling Hearts & Sakura Container -->
-    <div id="falling-container"></div>
+    <!-- Falling Container -->
+    <div class="falling-container" id="fallingContainer"></div>
 
-    <!-- Mobile Screen Wrapper (Fits exact design proportions) -->
-    <div class="w-full max-w-[430px] bg-white min-h-screen md:min-h-[880px] md:rounded-[40px] shadow-2xl flex flex-col relative overflow-hidden pb-12">
-        
-        <!-- Top Navbar Header -->
-        <header class="w-full px-5 py-4 flex items-center justify-between bg-white z-10">
-            <div class="flex items-center space-x-3">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Avatar" class="w-9 h-9 rounded-full object-cover border border-pink-200">
-                <span class="font-medium text-base text-[#5c4b51] tracking-wide">ชื่อร้าน</span>[span_2](start_span)[span_2](end_span)
-            </div>
-            <button class="text-[#5c4b51] text-lg focus:outline-none px-2 py-1">
-                <i class="fa-solid fa-bars"></i>[span_3](start_span)[span_3](end_span)
-            </button>
-        </header>
-
-        <!-- Main Content Area -->
-        <main class="flex-1 px-4 pt-1 pb-8 space-y-5">
-            
-            <!-- Banner & Overlapping Profile Section -->
-            <div class="relative mt-1">
-                <!-- Cherry Blossom Banner -->
-                <div class="w-full h-[190px] overflow-hidden banner-radius border border-pink-100/60 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=800&q=80" alt="Cherry Blossom Banner" class="w-full h-full object-cover">
-                </div>
-
-                <!-- Overlapping Profile Picture (Bottom-left corner of banner) -->
-                <div class="absolute -bottom-6 left-4 z-20">
-                    <div class="w-[92px] h-[92px] rounded-full bg-white p-1 shadow-md border border-pink-100 flex items-center justify-center">
-                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80" alt="Profile" class="w-full h-full rounded-full object-cover">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Status Message & Social Buttons Row -->
-            <div class="pt-4 flex items-center justify-between gap-2">
-                <!-- Status Message Pill -->
-                <div class="flex-1 status-badge px-4 py-2 flex items-center justify-between text-xs text-[#7a656c] shadow-2xs">
-                    <span class="truncate">รับงานตามคิวเท่านั้นคับ ♡</span>[span_4](start_span)[span_4](end_span)
-                    <span class="text-pink-400 ml-1">♡</span>
-                </div>
-
-                <!-- Social Icons (Compact & Cute Japanese Style) -->
-                <div class="flex items-center space-x-2 shrink-0">
-                    <a href="#" class="w-9 h-9 rounded-full bg-white border border-pink-100 shadow-2xs flex items-center justify-center text-[#5c4b51] hover:bg-pink-50 transition">
-                        <i class="fa-solid fa-comment text-xs text-[#06c755]"></i>
-                    </a>
-                    <a href="#" class="w-9 h-9 rounded-full bg-white border border-pink-100 shadow-2xs flex items-center justify-center text-[#5c4b51] hover:bg-pink-50 transition">
-                        <i class="fa-brands fa-instagram text-xs text-[#e1306c]"></i>
-                    </a>
-                    <a href="#" class="w-9 h-9 rounded-full bg-white border border-pink-100 shadow-2xs flex items-center justify-center text-[#5c4b51] hover:bg-pink-50 transition">
-                        <i class="fa-brands fa-facebook-f text-xs text-[#1877f2]"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Stats Card (Reviews & Rating) -->
-            <div class="soft-card p-4 border border-pink-100/60 flex items-center justify-around">
-                <div class="text-center flex-1">
-                    <div class="text-xl font-semibold text-[#5c4b51]">37</div>[span_5](start_span)[span_5](end_span)
-                    <div class="text-[11px] text-gray-400 uppercase tracking-wider mt-0.5">reviews</div>[span_6](start_span)[span_6](end_span)
-                </div>
-                <div class="w-[1px] h-8 bg-pink-100"></div>
-                <div class="text-center flex-1 flex items-center justify-center space-x-1.5">
-                    <i class="fa-solid fa-star text-amber-500 text-sm"></i>
-                    <span class="text-xl font-semibold text-[#5c4b51]">5.0</span>[span_7](start_span)[span_7](end_span)
-                    <div class="text-[11px] text-gray-400 uppercase tracking-wider mt-0.5 ml-1">rating</div>[span_8](start_span)[span_8](end_span)
-                </div>
-            </div>
-
-            <!-- Review Section Title -->
-            <div class="pt-2">
-                <h3 class="text-base font-medium text-[#5c4b51] tracking-wide">review</h3>[span_9](start_span)[span_9](end_span)
-            </div>
-
-            <!-- Review Item Card -->
-            <div class="soft-card p-4 border border-pink-100/60 space-y-2">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-1.5 text-sm font-medium text-[#5c4b51]">
-                        <span>♡</span>
-                        <span>ไอริโกะเดส</span>[span_10](start_span)[span_10](end_span)
-                        <span>♡</span>
-                    </div>
-                    <!-- Blue Stars matching image -->
-                    <div class="flex space-x-0.5 text-blue-600 text-xs">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                </div>
-                <div class="text-xs text-[#7a656c] font-light">
-                    พลัสวันค่ะ &lt;3
-                </div>
-                <div class="text-[10px] text-gray-300">
-                    13/10/2569[span_11](start_span)[span_11](end_span)
-                </div>
-            </div>
-
-        </main>
+    <!-- Top Right Controls -->
+    <div class="top-controls">
+        <button class="icon-btn" id="musicBtn" title="เปิด/ปิดเพลง">🎵</button>
+        <button class="icon-btn" id="settingsBtn" title="ตั้งค่าแอดมิน">⚙️</button>
     </div>
 
-    <!-- JavaScript for Falling Sakura & Hearts -->
+    <!-- Main Card View -->
+    <div class="phone-container">
+        <!-- Banner Cover -->
+        <div class="banner-box">
+            <img id="displayBanner" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" alt="Banner">
+        </div>
+
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="avatar-box">
+                <img id="displayAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Avatar">
+            </div>
+            <div class="shop-name" id="displayShopName">ชื่อร้าน</div>
+            <div class="shop-sub" id="displayShopSub">thx for review</div>
+        </div>
+
+        <!-- Stats Card -->
+        <div class="stats-card">
+            <div class="stat-item">
+                <div class="stat-value" id="statReviewsCount">0</div>
+                <div class="stat-label">reviews</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <div class="stat-value"><span class="star-icon">★</span> <span id="statRatingVal">0.0</span></div>
+                <div class="stat-label">rating</div>
+            </div>
+        </div>
+
+        <!-- Review Form -->
+        <div class="review-form-card">
+            <input type="text" id="inputName" class="form-input" placeholder="ชื่อของคุณ...">
+            <div class="star-picker" id="starPicker">
+                <span data-value="1">★</span>
+                <span data-value="2">★</span>
+                <span data-value="3">★</span>
+                <span data-value="4">★</span>
+                <span data-value="5">★</span>
+            </div>
+            <div class="form-row-file">
+                <label class="cam-btn" for="inputPhotoFile">📷</label>
+                <input type="file" id="inputPhotoFile" accept="image/*" style="display: none;">
+                <span class="file-name-display" id="fileNameDisplay">ยังไม่ได้เลือกรูปภาพ</span>
+            </div>
+            <textarea id="inputText" class="form-input" rows="2" placeholder="พิมพ์รีวิวของคุณที่นี่..."></textarea>
+            <button class="submit-btn" id="submitReviewBtn">ส่ง</button>
+        </div>
+
+        <!-- Reviews List -->
+        <div class="reviews-section" id="reviewsListContainer">
+            <!-- Dynamic Reviews Here -->
+        </div>
+    </div>
+
+    <!-- Floating Contact Button & Popup -->
+    <div class="floating-contact-wrapper">
+        <div class="contact-popup" id="contactPopup">
+            <a href="https://line.me" target="_blank" class="contact-link" id="linkLine">
+                <span style="color:#00B900;">💬</span> Line Official
+            </a>
+            <a href="https://instagram.com" target="_blank" class="contact-link" id="linkIg">
+                <span style="color:#E1306C;">📷</span> Instagram
+            </a>
+            <a href="https://facebook.com" target="_blank" class="contact-link" id="linkFb">
+                <span style="color:#1877F2;">📘</span> Facebook
+            </a>
+        </div>
+        <div class="cat-btn" id="catBtn" title="ติดต่อเรา">🐱</div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-card">
+            <button class="modal-close" id="closeModalBtn">×</button>
+            <div class="modal-title" id="modalTitle">⚙️ จัดการระบบแอดมิน</div>
+            
+            <div id="loginSection">
+                <div class="admin-section">
+                    <label>รหัสผ่านแอดมิน (ค่าเริ่มต้น: 1234)</label>
+                    <input type="password" id="adminPassInput" class="form-input" placeholder="กรอกรหัสผ่าน...">
+                </div>
+                <div style="margin-bottom:12px; display:flex; align-items:center; gap:8px; font-size:13px;">
+                    <input type="checkbox" id="rememberMeCheck" checked> จดจำการเข้าสู่ระบบในเครื่องนี้
+                </div>
+                <button class="submit-btn" id="loginBtn" style="width:100%;">เข้าสู่ระบบ</button>
+            </div>
+
+            <div id="dashboardSection" style="display:none;">
+                <div class="admin-section">
+                    <label>ธีมสีสำเร็จรูป</label>
+                    <div style="display:flex; gap:8px; margin-bottom:10px;">
+                        <button class="submit-btn" id="presetPink" style="padding:6px 12px; font-size:13px;">ชมพูพาสเทล</button>
+                        <button class="submit-btn" id="presetCream" style="padding:6px 12px; font-size:13px; background:linear-gradient(135deg, #f5ebe0 0%, #e3d5ca 100%); color:#5c4033;">ครีมมินิมอล</button>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <label>ข้อมูลร้านค้า</label>
+                    <input type="text" id="editShopName" class="form-input" placeholder="ชื่อร้าน" style="margin-bottom:6px;">
+                    <input type="text" id="editShopSub" class="form-input" placeholder="คำอธิบายใต้ร้าน" style="margin-bottom:6px;">
+                </div>
+
+                <div class="admin-section">
+                    <label>เปลี่ยนรูปแบนเนอร์ (Cover)</label>
+                    <input type="file" id="editBannerFile" accept="image/*" class="form-input" style="padding:8px;">
+                </div>
+
+                <div class="admin-section">
+                    <label>เปลี่ยนรูปโปรไฟล์</label>
+                    <input type="file" id="editAvatarFile" accept="image/*" class="form-input" style="padding:8px;">
+                </div>
+
+                <div class="admin-section">
+                    <label>ลิงก์โซเชียลมีเดีย</label>
+                    <input type="text" id="editLineLink" class="form-input" placeholder="Line URL" style="margin-bottom:6px;">
+                    <input type="text" id="editIgLink" class="form-input" placeholder="Instagram URL" style="margin-bottom:6px;">
+                    <input type="text" id="editFbLink" class="form-input" placeholder="Facebook URL" style="margin-bottom:10px;">
+                </div>
+
+                <div class="admin-section">
+                    <label>จัดการรีวิวทั้งหมด</label>
+                    <div id="adminReviewsList" style="max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:6px;"></div>
+                </div>
+
+                <button class="submit-btn" id="saveAdminConfig" style="width:100%; margin-top:10px;">บันทึกการเปลี่ยนแปลงทั้งหมด</button>
+                <button class="submit-btn" id="logoutAdminBtn" style="width:100%; margin-top:8px; background:#e0e0e0; color:#555;">ออกจากระบบ</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const symbols = ['🌸', '♡', '❤️', '💮', '✨', '💕'];
-        const container = document.getElementById('falling-container');
+        // Data & State Management
+        let appData = JSON.parse(localStorage.getItem('cute_shop_data')) || {
+            shopName: "ชื่อร้าน",
+            shopSub: "thx for review",
+            bannerUrl: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80",
+            avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+            lineUrl: "https://line.me",
+            igUrl: "https://instagram.com",
+            fbUrl: "https://facebook.com",
+            theme: "pink",
+            reviews: []
+        };
+
+        let selectedRating = 0;
+        let tempPhotoBase64 = "";
+
+        // DOM Elements
+        const displayBanner = document.getElementById('displayBanner');
+        const displayAvatar = document.getElementById('displayAvatar');
+        const displayShopName = document.getElementById('displayShopName');
+        const displayShopSub = document.getElementById('displayShopSub');
+        const statReviewsCount = document.getElementById('statReviewsCount');
+        const statRatingVal = document.getElementById('statRatingVal');
+        const reviewsListContainer = document.getElementById('reviewsListContainer');
+
+        const inputName = document.getElementById('inputName');
+        const inputText = document.getElementById('inputText');
+        const inputPhotoFile = document.getElementById('inputPhotoFile');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const starPicker = document.getElementById('starPicker');
+        const submitReviewBtn = document.getElementById('submitReviewBtn');
+
+        const catBtn = document.getElementById('catBtn');
+        const contactPopup = document.getElementById('contactPopup');
+        const linkLine = document.getElementById('linkLine');
+        const linkIg = document.getElementById('linkIg');
+        const linkFb = document.getElementById('linkFb');
+
+        const settingsBtn = document.getElementById('settingsBtn');
+        const adminModal = document.getElementById('adminModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const loginSection = document.getElementById('loginSection');
+        const dashboardSection = document.getElementById('dashboardSection');
+        const adminPassInput = document.getElementById('adminPassInput');
+        const rememberMeCheck = document.getElementById('rememberMeCheck');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutAdminBtn = document.getElementById('logoutAdminBtn');
+
+        const editShopName = document.getElementById('editShopName');
+        const editShopSub = document.getElementById('editShopSub');
+        const editBannerFile = document.getElementById('editBannerFile');
+        const editAvatarFile = document.getElementById('editAvatarFile');
+        const editLineLink = document.getElementById('editLineLink');
+        const editIgLink = document.getElementById('editIgLink');
+        const editFbLink = document.getElementById('editFbLink');
+        const saveAdminConfig = document.getElementById('saveAdminConfig');
+        const adminReviewsList = document.getElementById('adminReviewsList');
+        const presetPink = document.getElementById('presetPink');
+        const presetCream = document.getElementById('presetCream');
+
+        const musicBtn = document.getElementById('musicBtn');
+
+        // Init App UI
+        function renderApp() {
+            displayBanner.src = appData.bannerUrl;
+            displayAvatar.src = appData.avatarUrl;
+            displayShopName.textContent = appData.shopName;
+            displayShopSub.textContent = appData.shopSub;
+
+            linkLine.href = appData.lineUrl;
+            linkIg.href = appData.igUrl;
+            linkFb.href = appData.fbUrl;
+
+            // Stats
+            const count = appData.reviews.length;
+            statReviewsCount.textContent = count;
+            if (count > 0) {
+                const totalRating = appData.reviews.reduce((sum, r) => sum + r.rating, 0);
+                statRatingVal.textContent = (totalRating / count).toFixed(1);
+            } else {
+                statRatingVal.textContent = "0.0";
+            }
+
+            // Render Reviews List
+            reviewsListContainer.innerHTML = "";
+            if (count === 0) {
+                reviewsListContainer.innerHTML = `<div style="text-align:center; color:var(--text-sub); font-size:13px; padding:20px;">ยังไม่มีรีวิว มาเป็นคนแรกกันเถอะ!</div>`;
+            } else {
+                appData.reviews.forEach((r, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'review-card';
+                    card.innerHTML = `
+                        <div class="review-header">
+                            <span class="review-author">${escapeHtml(r.name)}</span>
+                            <span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+                        </div>
+                        <div class="review-text">${escapeHtml(r.text)}</div>
+                        ${r.photo ? `<img src="${r.photo}" class="review-img">` : ''}
+                    `;
+                    reviewsListContainer.appendChild(card);
+                });
+            }
+
+            applyTheme(appData.theme);
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            if (theme === 'cream') {
+                root.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #f5ebe0 0%, #e3d5ca 50%, #d5bdaf 100%)');
+                root.style.setProperty('--text-main', '#5c4033');
+                root.style.setProperty('--text-sub', '#8c7365');
+                root.style.setProperty('--accent-color', '#b08968');
+                root.style.setProperty('--border-color', '#eedecc');
+            } else {
+                root.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f3e5f5 100%)');
+                root.style.setProperty('--text-main', '#886f6f');
+                root.style.setProperty('--text-sub', '#b09e9e');
+                root.style.setProperty('--accent-color', '#d4a5a5');
+                root.style.setProperty('--border-color', '#f0e6e6');
+            }
+        }
+
+        // Star Picker for Form
+        const stars = starPicker.querySelectorAll('span');
+        stars.forEach(s => {
+            s.addEventListener('click', () => {
+                selectedRating = parseInt(s.getAttribute('data-value'));
+                stars.forEach((st, idx) => {
+                    if (idx < selectedRating) st.classList.add('active');
+                    else st.classList.remove('active');
+                });
+            });
+        });
+
+        // Photo Upload for Review
+        inputPhotoFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                fileNameDisplay.textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    tempPhotoBase64 = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                fileNameDisplay.textContent = "ยังไม่ได้เลือกรูปภาพ";
+                tempPhotoBase64 = "";
+            }
+        });
+
+        // Submit Review
+        submitReviewBtn.addEventListener('click', () => {
+            const name = inputName.value.trim();
+            const text = inputText.value.trim();
+
+            if (!name) {
+                alert('กรุณากรอกชื่อของคุณ');
+                return;
+            }
+            if (selectedRating === 0) {
+                alert('กรุณาให้คะแนนดาว');
+                return;
+            }
+            if (!text) {
+                alert('กรุณากรอกข้อความรีวิว');
+                return;
+            }
+
+            const newReview = {
+                id: Date.now(),
+                name: name,
+                rating: selectedRating,
+                text: text,
+                photo: tempPhotoBase64
+            };
+
+            appData.reviews.unshift(newReview);
+            localStorage.setItem('cute_shop_data', JSON.stringify(appData));
+
+            // Reset form
+            inputName.value = "";
+            inputText.value = "";
+            inputPhotoFile.value = "";
+            fileNameDisplay.textContent = "ยังไม่ได้เลือกรูปภาพ";
+            tempPhotoBase64 = "";
+            selectedRating = 0;
+            stars.forEach(st => st.classList.remove('active'));
+
+            renderApp();
+            alert('ส่งรีวิวสำเร็จ ขอบคุณค่ะ! 💕');
+        });
+
+        // Contact Popup Toggle
+        catBtn.addEventListener('click', () => {
+            contactPopup.classList.toggle('show');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!catBtn.contains(e.target) && !contactPopup.contains(e.target)) {
+                contactPopup.classList.remove('show');
+            }
+        });
+
+        // Admin Modal & Login
+        settingsBtn.addEventListener('click', () => {
+            adminModal.style.display = 'flex';
+            if (localStorage.getItem('admin_logged_in') === 'true') {
+                showAdminDashboard();
+            } else {
+                loginSection.style.display = 'block';
+                dashboardSection.style.display = 'none';
+            }
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            adminModal.style.display = 'none';
+        });
+
+        loginBtn.addEventListener('click', () => {
+            const pass = adminPassInput.value;
+            if (pass === '1234') {
+                if (rememberMeCheck.checked) {
+                    localStorage.setItem('admin_logged_in', 'true');
+                }
+                showAdminDashboard();
+            } else {
+                alert('รหัสผ่านไม่ถูกต้อง (ค่าเริ่มต้นคือ 1234)');
+            }
+        });
+
+        logoutAdminBtn.addEventListener('click', () => {
+            localStorage.removeItem('admin_logged_in');
+            loginSection.style.display = 'block';
+            dashboardSection.style.display = 'none';
+            adminPassInput.value = "";
+        });
+
+        function showAdminDashboard() {
+            loginSection.style.display = 'none';
+            dashboardSection.style.display = 'block';
+
+            editShopName.value = appData.shopName;
+            editShopSub.value = appData.shopSub;
+            editLineLink.value = appData.lineUrl;
+            editIgLink.value = appData.igUrl;
+            editFbLink.value = appData.fbUrl;
+
+            renderAdminReviews();
+        }
+
+        function renderAdminReviews() {
+            adminReviewsList.innerHTML = "";
+            if (appData.reviews.length === 0) {
+                adminReviewsList.innerHTML = `<div style="font-size:12px; color:#888; text-align:center;">ยังไม่มีรีวิวในระบบ</div>`;
+                return;
+            }
+
+            appData.reviews.forEach((r, idx) => {
+                const item = document.createElement('div');
+                item.className = 'admin-review-item';
+                item.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:bold;">
+                        <span>#${idx+1} - ${escapeHtml(r.name)} (${r.rating} ดาว)</span>
+                    </div>
+                    <div style="font-size:12px; color:#555;">${escapeHtml(r.text)}</div>
+                    <div class="btn-group">
+                        <button class="mini-btn btn-delete" onclick="deleteReview(${r.id})">ลบรีวิว</button>
+                    </div>
+                `;
+                adminReviewsList.appendChild(item);
+            });
+        }
+
+        window.deleteReview = function(id) {
+            if (confirm('คุณต้องการลบรีวิวนี้ใช่หรือไม่?')) {
+                appData.reviews = appData.reviews.filter(r => r.id !== id);
+                localStorage.setItem('cute_shop_data', JSON.stringify(appData));
+                renderApp();
+                renderAdminReviews();
+            }
+        };
+
+        presetPink.addEventListener('click', () => {
+            appData.theme = 'pink';
+            applyTheme('pink');
+        });
+
+        presetCream.addEventListener('click', () => {
+            appData.theme = 'cream';
+            applyTheme('cream');
+        });
+
+        // Save Admin Config with Local Images
+        saveAdminConfig.addEventListener('click', async () => {
+            appData.shopName = editShopName.value.trim() || "ชื่อร้าน";
+            appData.shopSub = editShopSub.value.trim() || "";
+            appData.lineUrl = editLineLink.value.trim() || "#";
+            appData.igUrl = editIgLink.value.trim() || "#";
+            appData.fbUrl = editFbLink.value.trim() || "#";
+
+            // Handle Banner File Upload
+            if (editBannerFile.files[0]) {
+                appData.bannerUrl = await fileToBase64(editBannerFile.files[0]);
+            }
+
+            // Handle Avatar File Upload
+            if (editAvatarFile.files[0]) {
+                appData.avatarUrl = await fileToBase64(editAvatarFile.files[0]);
+            }
+
+            localStorage.setItem('cute_shop_data', JSON.stringify(appData));
+            renderApp();
+            alert('บันทึกข้อมูลสำเร็จเรียบร้อยค่ะ! ✨');
+            adminModal.style.display = 'none';
+        });
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Web Audio API Background Music
+        let audioCtx = null;
+        let isPlayingMusic = false;
+        let musicInterval = null;
+
+        musicBtn.addEventListener('click', () => {
+            if (!isPlayingMusic) {
+                startMusic();
+                musicBtn.textContent = "🔊";
+                isPlayingMusic = true;
+            } else {
+                stopMusic();
+                musicBtn.textContent = "🎵";
+                isPlayingMusic = false;
+            }
+        });
+
+        function startMusic() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            // Cute lullaby sequence notes (C, E, G, A)
+            const notes = [261.63, 329.63, 392.00, 440.00, 523.25];
+            let index = 0;
+
+            musicInterval = setInterval(() => {
+                if (!isPlayingMusic) return;
+                playTone(notes[index % notes.length], 0.3);
+                index++;
+            }, 600);
+        }
+
+        function stopMusic() {
+            if (musicInterval) {
+                clearInterval(musicInterval);
+                musicInterval = null;
+            }
+        }
+
+        function playTone(freq, duration) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        // Falling Hearts & Stars Generator
+        const fallingContainer = document.getElementById('fallingContainer');
+        const symbols = ['💖', '✨', '⭐', '🌸', '🤍'];
 
         function createFallingItem() {
             const item = document.createElement('div');
-            item.classList.add('falling-item');
-            item.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-            
-            // Random positioning & sizing
+            item.className = 'falling-item';
+            item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
             item.style.left = Math.random() * 100 + 'vw';
-            item.style.fontSize = (Math.random() * 10 + 12) + 'px';
+            item.style.fontSize = (Math.random() * 12 + 14) + 'px';
             
-            // Random fall duration (soft and slow)
-            const duration = Math.random() * 5 + 6;
+            const duration = Math.random() * 6 + 6; // 6 to 12 seconds slow fall
             item.style.animationDuration = duration + 's';
             
-            container.appendChild(item);
+            fallingContainer.appendChild(item);
 
-            // Remove after animation completes
             setTimeout(() => {
                 item.remove();
             }, duration * 1000);
         }
 
-        // Generate items periodically
-        setInterval(createFallingItem, 400);
+        // Start falling immediately upon loading
+        setInterval(createFallingItem, 700);
+        for(let i=0; i<6; i++) {
+            setTimeout(createFallingItem, i * 200);
+        }
+
+        // Initial render on load
+        renderApp();
     </script>
 </body>
 </html>
